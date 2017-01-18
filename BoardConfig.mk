@@ -41,3 +41,18 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 PRODUCT_COPY_FILES += device/xiaomi/mocha/twrp.fstab:recovery/root/etc/twrp.fstab
 
 TARGET_PREBUILT_KERNEL := device/xiaomi/mocha/kernel
+
+# MultiROM
+MR_PIXEL_FORMAT := RGB_565
+MR_INPUT_TYPE := type_b
+MR_INIT_DEVICES := device/xiaomi/mocha/multirom/mr_init_devices.c
+MR_DPI := xhdpi
+MR_DPI_FONT := 320
+MR_FSTAB := device/xiaomi/mocha/multirom/twrp.fstab
+MR_KEXEC_MEM_MIN := 0x85000000
+MR_KEXEC_DTB := true
+MR_DEVICE_HOOKS := device/xiaomi/mocha/multirom/mr_hooks.c
+MR_DEVICE_HOOKS_VER := 3
+MR_DEVICE_VARIANTS := mocha
+MR_USE_MROM_FSTAB := true
+TARGET_RECOVERY_IS_MULTIROM := true
