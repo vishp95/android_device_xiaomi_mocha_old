@@ -30,7 +30,7 @@ on init
     # create directory for mounting user calibration partition
     mkdir /mnt/usercalib 0771 system system
 
-    start watchdogd
+#   start watchdogd
 
 on fs
 # mount console ramooops
@@ -81,6 +81,9 @@ on boot
     chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/sd_window_enable
 
 ## cmhw permissions
+#dt2w
+    chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-004a/wakeup_mode
+
 # key disabler
     chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-004a/enable_keys
     chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-0020/input/input3/0dbutton

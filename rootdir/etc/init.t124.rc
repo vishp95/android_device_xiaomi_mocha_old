@@ -52,6 +52,19 @@ on boot
     chown system system /sys/class/input/input5/enabled
     chown system system /sys/class/input/input6/enabled
     chown system system /sys/class/input/input7/enabled
+    chmod 0777 /sys/module/input_cfboost/parameters/boost_freq
+    chmod 0777 /sys/module/input_cfboost/parameters/boost_time
+    chmod 0777 /sys/module/input_cfboost/parameters/boost_emc
+    chmod 0777 /sys/module/input_cfboost/parameters/boost_gpu
+    chmod 0777 /sys/module/input_cfboost/parameters/boost_cpus
+    chmod 0777 /sys/kernel/tegra_gpu/gpu_floor_state
+	chmod 0777 /sys/kernel/tegra_gpu/gpu_floor_rate
+	chmod 0777 /sys/kernel/tegra_gpu/gpu_cap_state
+	chmod 0777 /sys/kernel/tegra_gpu/gpu_cap_rate
+	chmod 0777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0777 /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online
+    chmod 0777 /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online
 
     write /sys/module/input_cfboost/parameters/boost_freq 1530000
     write /sys/module/input_cfboost/parameters/boost_emc 300000
