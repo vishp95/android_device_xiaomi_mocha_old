@@ -6,7 +6,7 @@
 #documentation without an express license agreement from NVIDIA Corporation
 #is strictly prohibited.
 
-import init.tn8diag.rc
+import init.mochadiag.rc
 
 on early-init
     # create /oem symbol link
@@ -29,8 +29,8 @@ on fs
     setprop ro.crypto.umount_sd false
     setprop ro.crypto.fuse_sdcard true
     setprop audio.custompolicy 1
-    mount_all /fstab.tn8
-    swapon_all /fstab.tn8
+    mount_all /fstab.mocha
+    swapon_all /fstab.mocha
 
 on boot
     #max resolution supported for Miracast is 1080p, represented interms of macroblocks
