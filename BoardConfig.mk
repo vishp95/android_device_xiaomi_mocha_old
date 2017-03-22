@@ -31,7 +31,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive androidboot.hardware=tn8
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive androidboot.hardware=mocha
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_RAMDISK_OFFSET := 0x02000000
 BOARD_KERNEL_PAGESIZE := 2048
@@ -92,7 +92,7 @@ MAX_EGL_CACHE_ENTRY_SIZE := 262144
 
 # Recovery
 TARGET_RECOVERY_DEVICE_DIRS += device/xiaomi/mocha
-TARGET_RECOVERY_FSTAB := device/xiaomi/mocha/rootdir/etc/fstab.tn8
+TARGET_RECOVERY_FSTAB := device/xiaomi/mocha/rootdir/etc/fstab.mocha
 BOARD_NO_SECURE_DISCARD := true
 
 # Wifi related defines

@@ -21,5 +21,5 @@ LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SRC_FILES := power.cpp
 LOCAL_SHARED_LIBRARIES := liblog libcutils libutils
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := power.tegra
+LOCAL_MODULE := power.mocha
 include $(BUILD_SHARED_LIBRARY)

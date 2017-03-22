@@ -31,7 +31,7 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    fstab.tn8 \
+    fstab.mocha \
     init.cal.rc \
     init.comms.rc \
     init.icera.rc \
@@ -40,12 +40,12 @@ PRODUCT_PACKAGES += \
     init.t124.rc \
     init.tegra.rc \
     init.tlk.rc \
-    init.tn8.rc \
-    init.tn8.usb.rc \
-    init.tn8_common.rc \
+    init.mocha.rc \
+    init.mocha.usb.rc \
+    init.mocha_common.rc \
     init.ussrd.rc \
-    power.tn8.rc \
-    ueventd.tn8.rc
+    power.mocha.rc \
+    ueventd.mocha.rc
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -165,7 +165,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
 # Power
-PRODUCT_PACKAGES += power.tegra
+PRODUCT_PACKAGES += power.mocha
 
 # Sensors
 PRODUCT_PACKAGES += \
