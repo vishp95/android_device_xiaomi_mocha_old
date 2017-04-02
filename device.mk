@@ -38,7 +38,6 @@ PRODUCT_PACKAGES += \
     init.hdcp.rc \
     init.ray_touch.rc \
     init.t124.rc \
-    init.tegra.rc \
     init.tlk.rc \
     init.mocha.rc \
     init.mocha.usb.rc \
