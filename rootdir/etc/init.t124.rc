@@ -27,10 +27,20 @@ on boot
     # TBD: Remove the below line that give permissions for scaling_governor
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
+    # Smoke kernel default governor
+    insmod /system/lib/modules/symsearch.ko
+    insmod /system/lib/modules/cpufreq_smartmax.ko
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor smartmax
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor smartmax
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor smartmax
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor smartmax
+
+    # Smoke kernel default governor settings
+    write /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq 132600
+    write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 51000
+    write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 51000
+    write /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration 45000
+
     chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
     chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
