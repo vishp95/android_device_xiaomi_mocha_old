@@ -151,7 +151,8 @@ PRODUCT_PACKAGES += \
     libmocha_camera \
     libmocha_omx \
     libpowerservice_client \
-    libmocha_libc
+    libmocha_libc \
+    libmocha_libgui
 
 PRODUCT_CHARACTERISTICS := tablet
 
