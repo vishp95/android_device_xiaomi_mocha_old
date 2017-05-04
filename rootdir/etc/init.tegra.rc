@@ -80,6 +80,9 @@ on boot
     chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/sd_window
     chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/sd_window_enable
 
+#dt2w
+    chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-004a/wakeup_mode
+
 ## cmhw permissions
 # key disabler
     chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-004a/enable_keys
