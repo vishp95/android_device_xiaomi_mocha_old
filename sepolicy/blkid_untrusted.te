@@ -1,0 +1,2 @@
+allow blkid_untrusted kernel:system module_request;
+

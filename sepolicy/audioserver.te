@@ -1,0 +1,4 @@
+allow audioserver kernel:system module_request;
+allow audioserver proc_net:file read;
+allow audioserver proc_net:file { getattr open };
+

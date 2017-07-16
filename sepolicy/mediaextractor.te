@@ -1,0 +1,2 @@
+allow mediaextractor kernel:system module_request;
+

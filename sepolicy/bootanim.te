@@ -1,0 +1,3 @@
+allow bootanim kernel:system module_request;
+allow bootanim self:process execmem;
+
