@@ -18,7 +18,6 @@ on post-fs-data
 
     chown system system /dev/sysmatdrv
     chmod 0660 /dev/sysmatdrv
-    insmod /system/lib/modules/texfat.ko
 
 on init
     # Mount a tmpfs into /mnt/tmp for hosting nvram, phs shared memory
