@@ -18,4 +18,6 @@ nvwifi			u:object_r:wifi_service:s0
 xlanwifi		u:object_r:wifi_service:s0
 xlanwifip2p		u:object_r:wifip2p_service:s0
 
+PHS			u:object_r:ussrd_service:s0
+
 android.display.hwcomposer	u:object_r:surfaceflinger_service:s0
