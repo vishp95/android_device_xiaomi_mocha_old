@@ -81,6 +81,7 @@ on boot
 
 #dt2w
     chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-004a/wakeup_mode
+    chown system system /sys/devices/platform/tegra12-i2c.3/i2c-3/3-0020/input/input3/wake_gesture
 
 ## cmhw permissions
 # key disabler
