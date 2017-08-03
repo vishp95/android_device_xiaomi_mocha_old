@@ -121,3 +121,6 @@ WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path
 # SELinux
 BOARD_SEPOLICY_DIRS += device/xiaomi/mocha/sepolicy
 
+# let charger mode enter suspend
+BOARD_CHARGER_ENABLE_SUSPEND := true
+
