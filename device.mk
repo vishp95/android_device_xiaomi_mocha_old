@@ -113,8 +113,8 @@ PRODUCT_PACKAGES += \
     tinyplay_mocha \
     libtinyalsa_mocha \
     libtinyalsa \
-    xaplay
-
+    xaplay \
+    thermal.mocha
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
