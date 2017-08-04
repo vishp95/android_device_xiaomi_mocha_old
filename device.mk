@@ -78,6 +78,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/com.nvidia.feature.xml:system/etc/permissions/com.nvidia.feature.xml \
     $(LOCAL_PATH)/permissions/com.nvidia.nvsi.xml:system/etc/permissions/com.nvidia.nvsi.xml
 
+# HALs
+PRODUCT_PACKAGES += thermal.tegra
 
 # keylayout
 PRODUCT_COPY_FILES += \
@@ -114,7 +116,6 @@ PRODUCT_PACKAGES += \
     libtinyalsa_mocha \
     libtinyalsa \
     xaplay \
-    thermal.mocha
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
