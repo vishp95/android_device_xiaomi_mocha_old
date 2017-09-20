@@ -34,9 +34,7 @@ PRODUCT_PACKAGES += \
     fstab.tn8 \
     init.cal.rc \
     init.comms.rc \
-    init.icera.rc \
     init.hdcp.rc \
-    init.ray_touch.rc \
     init.t124.rc \
     init.tegra.rc \
     init.tlk.rc \
