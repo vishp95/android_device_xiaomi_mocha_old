@@ -103,7 +103,6 @@ PRODUCT_PACKAGES += \
     libaudiohalcm \
     libaudio-resampler \
     libaudiospdif \
-    libstagefrighthw \
     libtinycompress \
     tinycap_mocha \
     tinymix_mocha \
@@ -121,9 +120,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/camera/nvcamera.conf:system/etc/nvcamera.conf \
     $(LOCAL_PATH)/camera/model_frontal.xml:system/etc/model_frontal.xml
-
-PRODUCT_PACKAGES += \
-    camera.tegra
 
 # Gello
 PRODUCT_PACKAGES += \
@@ -144,15 +140,6 @@ PRODUCT_PACKAGES += \
 # Light
 #PRODUCT_PACKAGES += \
 #    lights.tegra
-
-# Missing symbols lib
-
-PRODUCT_PACKAGES += \
-    libmocha_camera \
-    libmocha_omx \
-    libpowerservice_client \
-    libmocha_libc \
-    libmocha_libgui
 
 PRODUCT_CHARACTERISTICS := tablet
 
