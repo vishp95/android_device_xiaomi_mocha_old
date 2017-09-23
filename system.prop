@@ -32,3 +32,5 @@ drm.service.enabled=true
 
 # Radio
 ro.radio.noril=yes
+
+media.stagefright.less-secure=true
