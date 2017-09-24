@@ -106,7 +106,6 @@ PRODUCT_PACKAGES += \
     libaudiohalcm \
     libaudio-resampler \
     libaudiospdif \
-    libstagefrighthw \
     libtinycompress \
     tinycap_mocha \
     tinymix_mocha \
