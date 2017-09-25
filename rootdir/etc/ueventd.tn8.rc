@@ -13,6 +13,7 @@
 /dev/imx219     0660    media   camera
 /dev/ar0261     0660    media   camera
 /dev/ov5693*    0660    media   camera
+/dev/tegra_camera_ctrl 0660  media   camera
 /dev/camera.pcl    0660    media   camera
 /dev/tegra_camera 0660  media   camera
 /dev/camera*    0660    media   camera
