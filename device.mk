@@ -77,6 +77,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/com.nvidia.feature.xml:system/etc/permissions/com.nvidia.feature.xml \
     $(LOCAL_PATH)/permissions/com.nvidia.nvsi.xml:system/etc/permissions/com.nvidia.nvsi.xml
 
+# Thermal
+PRODUCT_PACKAGES += thermal.tegra
 
 # keylayout
 PRODUCT_COPY_FILES += \
