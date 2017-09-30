@@ -1,4 +1,0 @@
-allow mediacodec kernel:system module_request;
-allow mediacodec sysfs:file { open read };
-allow mediacodec camera_device:chr_file { ioctl open read write };
-allow mediacodec sysfs:file { read open };

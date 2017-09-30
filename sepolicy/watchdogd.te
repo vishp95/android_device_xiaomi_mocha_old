@@ -1,2 +1,0 @@
-allow watchdogd kernel:system module_request;
-

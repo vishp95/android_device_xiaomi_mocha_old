@@ -1,3 +1,0 @@
-allow fsck kernel:system module_request;
-allow fsck_untrusted kernel:system module_request;
-

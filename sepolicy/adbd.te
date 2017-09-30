@@ -1,2 +1,0 @@
-allow adbd kernel:system module_request;
-

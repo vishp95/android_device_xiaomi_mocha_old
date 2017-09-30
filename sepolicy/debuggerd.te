@@ -1,2 +1,0 @@
-allow debuggerd kernel:system module_request;
-

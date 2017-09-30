@@ -1,2 +1,0 @@
-allow ueventd kernel:system module_request;
-

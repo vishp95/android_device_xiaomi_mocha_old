@@ -1,2 +1,0 @@
-allow servicemanager kernel:system module_request;
-
