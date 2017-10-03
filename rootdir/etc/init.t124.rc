@@ -29,13 +29,6 @@ on boot
     write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 1326000
     write /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration 45000
 
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost_factor
-    write /sys/devices/system/cpu/cpufreq/interactive/io_busy_threshold 50
-
     chown system system /sys/devices/tegradc.0/enable
     chown system system /sys/devices/tegradc.1/enable
     chown system system /sys/devices/platform/host1x/nvavp/boost_sclk

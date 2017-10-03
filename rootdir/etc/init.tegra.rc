@@ -176,12 +176,6 @@ on boot
 # TLK storage service
 import init.tlk.rc
 
-service set_sensor_perm /system/bin/set_light_sensor_perm.sh
-    class main
-    user root
-    group root
-    oneshot
-
 on property:ro.debuggable=1
     # EMC debug interface
     chmod 666 /sys/kernel/debug/tegra_emc/eack_state
