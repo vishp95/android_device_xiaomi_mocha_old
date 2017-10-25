@@ -57,11 +57,7 @@ on init
     export VIBE_PIPE_PATH /dev/pipes
     mkdir /dev/pipes 0771 system system
 
-# Xiaomi WiFi and BT macs getter section
-    mkdir /data/misc/macs 0444 system system
-    symlink /dev/block/platform/700b0600.sdhci/by-name/BKB /data/misc/macs/macs
-
-# Loads real wifi and bt mac from /dev/block/platform/sdhci-tegra.3/by-name/BKB
+# Loads real wifi and bt mac from /dev/block/mmcblk0p15
 service conn_wifi /system/vendor/bin/conn_init -op
     class main
     user root

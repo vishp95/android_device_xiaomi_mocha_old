@@ -16,11 +16,6 @@ on early-init
     symlink /system/vendor/lbh /lbh
     chmod 0755 /lbh
     chown root system /lbh
- 
-    #hack to make hacked mipad GL blobs work (need /gl/libEGL_tegra.so path)
-    symlink /system/lib/egl /gl
-    chmod 0755 /gl
-    chown root system /gl
 
 on fs
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
@@ -35,7 +30,6 @@ on boot
     setprop nvwfd.maxresolution_macroblocks 8160
     #enable Miracast game mode support
     setprop nvwfd.gamemode 1
-#    setprop wifi.supplicant wpa_suppl_nl
 
 on init
     setprop keyguard.no_require_sim true
