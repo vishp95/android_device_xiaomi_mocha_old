@@ -43,7 +43,8 @@ PRODUCT_PACKAGES += \
     init.tn8_common.rc \
     init.ussrd.rc \
     power.tn8.rc \
-    ueventd.tn8.rc
+    ueventd.tn8.rc \
+    ussrd.conf
 
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 TARGET_USERIMAGES_USE_F2FS := true
