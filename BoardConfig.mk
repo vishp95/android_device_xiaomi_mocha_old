@@ -122,3 +122,6 @@ BOARD_SEPOLICY_DIRS += device/xiaomi/mocha/sepolicy/common \
                        device/xiaomi/mocha/sepolicy/lineage-common \
                        device/xiaomi/mocha/sepolicy/mocha
 
+# seccomp
+BOARD_SECCOMP_POLICY := device/xiaomi/mocha/seccomp
+
