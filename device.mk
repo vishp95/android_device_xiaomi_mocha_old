@@ -44,7 +44,8 @@ PRODUCT_PACKAGES += \
     init.ussrd.rc \
     power.tn8.rc \
     ueventd.tn8.rc \
-    ussrd.conf
+    ussrd.conf \
+    ussr_setup
 
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 TARGET_USERIMAGES_USE_F2FS := true
@@ -115,7 +116,8 @@ PRODUCT_PACKAGES += \
     tinyplay_mocha \
     libtinyalsa_mocha \
     libtinyalsa \
-    xaplay
+    xaplay \
+    enctune.conf
 
 
 # Bluetooth
