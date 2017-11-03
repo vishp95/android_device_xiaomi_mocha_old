@@ -29,6 +29,8 @@ TARGET_CPU_VARIANT := cortex-a15
 TARGET_BOARD_PLATFORM := tegra
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
+# Use unified vendor
+TARGET_TEGRA_VARIANT := shield
 
 # Kernel
 BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive androidboot.hardware=tn8
