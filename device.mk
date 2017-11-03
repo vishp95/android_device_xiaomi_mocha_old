@@ -23,7 +23,7 @@ $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 
-$(call inherit-product-if-exists, vendor/xiaomi/mocha/shield/mocha.mk)
+$(call inherit-product-if-exists, vendor/nvidia/shield/mocha.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
