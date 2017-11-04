@@ -37,3 +37,5 @@ ro.radio.noril=yes
 media.stagefright.less-secure=true
 
 persist.debug.wfd.enable=1
+
+persist.media.treble_omx=false
