@@ -170,6 +170,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/xiaomi/mocha/sensors/etc/hals.conf:system/etc/sensors/hals.conf
 
+# Packaging
+BLOCK_BASED_OTA := false
 
 # Permissions
 PRODUCT_COPY_FILES += \
