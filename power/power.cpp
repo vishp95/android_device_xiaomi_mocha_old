@@ -2,6 +2,7 @@
  * Copyright (C) 2012 The Android Open Source Project
  * Copyright (c) 2012-2014, NVIDIA CORPORATION.  All rights reserved.
  * Copyright (C) 2015 The CyanogenMod Project
+ * Copyright (C) 2017 arttttt
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -56,15 +57,14 @@ void sysfs_write(const char *path, const char *s)
 static void set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, __attribute__ ((unused)) int state)
 {
     switch (feature) {
-    case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-        ALOGW("Double tap to wake\n");
-        char tmp_str[BUF_SIZE];
-        snprintf(tmp_str, BUF_SIZE, "%d", state);
-        sysfs_write(TAP_TO_WAKE_NODE, tmp_str);
-        break;
-    default:
-        ALOGW("Error setting the feature, it doesn't exist %d\n", feature);
-        break;
+        case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
+            ALOGW("Double tap to wake\n");
+            char tmp_str[BUF_SIZE];
+            snprintf(tmp_str, BUF_SIZE, "%d", state);
+            sysfs_write(TAP_TO_WAKE_NODE, tmp_str);
+            break;
+        default:
+            ALOGW("Error setting the feature, it doesn't exist %d\n", feature);
     }
 }
 
@@ -80,7 +80,7 @@ static void power_set_interactive(struct power_module *module, int on) {
 struct power_module HAL_MODULE_INFO_SYM = {
     common: {
         tag: HARDWARE_MODULE_TAG,
-        module_api_version: POWER_MODULE_API_VERSION_0_3,
+        module_api_version: POWER_MODULE_API_VERSION_0_2,
         hal_api_version: HARDWARE_HAL_API_VERSION,
         id: POWER_HARDWARE_MODULE_ID,
         name: "mocha smoke PowerHAL",
@@ -94,5 +94,4 @@ struct power_module HAL_MODULE_INFO_SYM = {
     setInteractive: power_set_interactive,
     powerHint: power_hint,
     setFeature: set_feature,
-    getFeature: 0,
 };
