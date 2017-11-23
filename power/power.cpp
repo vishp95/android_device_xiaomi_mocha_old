@@ -31,8 +31,7 @@
 
 #define BUF_SIZE 80
 #define TAP_TO_WAKE_NODE "/proc/touchpanel/double_tap_enable"
-
-static void power_init(__attribute__ ((unused)) struct power_module *) { }
+#define TAG "POWER HAL"
 
 void sysfs_write(const char *path, const char *s)
 {
@@ -54,28 +53,35 @@ void sysfs_write(const char *path, const char *s)
     close(fd);
 }
 
+static void power_init(__attribute__ ((unused)) struct power_module *) { }
+
+static void power_set_interactive(struct power_module *module, int on) { }
+
+static void power_hint(struct power_module *module, power_hint_t hint, void *data) { 
+    ALOGV("hint = %d", hint);
+}
+
 static void set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, __attribute__ ((unused)) int state)
 {
     switch (feature) {
         case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-            ALOGW("Double tap to wake\n");
+            ALOGV("%s\nDouble tap to wake\n", TAG);
             char tmp_str[BUF_SIZE];
             snprintf(tmp_str, BUF_SIZE, "%d", state);
             sysfs_write(TAP_TO_WAKE_NODE, tmp_str);
             break;
+        case POWER_FEATURE_SUPPORTED_PROFILES:
+            ALOGV("%s\npower profiles\n", TAG);
+            break;
         default:
-            ALOGW("Error setting the feature, it doesn't exist %d\n", feature);
+            ALOGE("Error setting the feature, it doesn't exist %d\n", feature);
     }
+    ALOGV("%s\nfeature = %d\n", TAG, feature);
 }
-
-static void power_hint(struct power_module *module, power_hint_t hint, void *data) { }
 
 static struct hw_module_methods_t power_module_methods = {
     open: NULL,
 };
-
-static void power_set_interactive(struct power_module *module, int on) {
-}
 
 struct power_module HAL_MODULE_INFO_SYM = {
     common: {
