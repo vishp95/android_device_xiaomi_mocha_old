@@ -16,88 +16,135 @@
  * limitations under the License.
  */
 
-#include <hardware/hardware.h>
-#include <hardware/power.h>
 #include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/time.h>
 #include <fcntl.h>
-#include <dlfcn.h>
+#include <string.h>
 
 #include <utils/Log.h>
+
 #include <cutils/properties.h>
+#include <hardware/power.h>
 
 #define BUF_SIZE 80
 #define TAP_TO_WAKE_NODE "/proc/touchpanel/double_tap_enable"
-#define TAG "POWER HAL"
+#define TAG "PowerHAL"
+#define POWER_PROFILE_PROPERTY  "sys.perf.profile"
 
-void sysfs_write(const char *path, const char *s)
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE,
+    PROFILE_BIAS_POWER_SAVE,
+    PROFILE_MAX
+};
+
+static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+
+void sysfs_write(char *path, const char *s)
 {
-    char buf[80];
-    int len;
-    int fd = open(path, O_WRONLY);
+	char buf[80];
+	int len;
+	int fd = open(path, O_WRONLY);
 
-    if (fd < 0) {
-        strerror_r(errno, buf, sizeof(buf));
-        ALOGE("Error opening %s: %s\n", path, buf);
-        return;
-    }
+	if (fd < 0) {
+		strerror_r(errno, buf, sizeof(buf));
+		ALOGE("Error opening %s: %s\n", path, buf);
+		return;
+	}
 
-    len = write(fd, s, strlen(s));
-    if (len < 0) {
-        strerror_r(errno, buf, sizeof(buf));
-        ALOGE("Error writing to %s: %s\n", path, buf);
-    }
-    close(fd);
+	len = write(fd, s, strlen(s));
+	if (len < 0) {
+		strerror_r(errno, buf, sizeof(buf));
+		ALOGE("Error writing to %s: %s\n", path, buf);
+	}
+	close(fd);
 }
 
-static void power_init(__attribute__ ((unused)) struct power_module *) { }
-
-static void power_set_interactive(struct power_module *module, int on) { }
-
-static void power_hint(struct power_module *module, power_hint_t hint, void *data) { 
-    ALOGV("hint = %d", hint);
+static void sysfs_write_int(char *path, int value)
+{
+	char buf[BUF_SIZE];
+	snprintf(buf, BUF_SIZE, "%d", value);
+	sysfs_write(path, buf);
 }
 
-static void set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, __attribute__ ((unused)) int state)
+static void property_set_int(char *property, int value)
 {
-    switch (feature) {
-        case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-            ALOGV("%s\nDouble tap to wake\n", TAG);
-            char tmp_str[BUF_SIZE];
-            snprintf(tmp_str, BUF_SIZE, "%d", state);
-            sysfs_write(TAP_TO_WAKE_NODE, tmp_str);
-            break;
-        case POWER_FEATURE_SUPPORTED_PROFILES:
-            ALOGV("%s\npower profiles\n", TAG);
-            break;
-        default:
-            ALOGE("Error setting the feature, it doesn't exist %d\n", feature);
-    }
-    ALOGV("%s\nfeature = %d\n", TAG, feature);
+	char buf[BUF_SIZE];
+	snprintf(buf, BUF_SIZE, "%d", value);
+	property_set(property, buf);
+}
+
+static void power_init(__attribute__ ((unused)) struct power_module *) {
+	ALOGW("%s: power_init\n", TAG);
+}
+
+static void power_set_interactive(__attribute__ ((unused)) struct power_module *module, __attribute__ ((unused)) int on) { 
+	ALOGW("%s: power_set_interactive\n", TAG);
+}
+
+static void set_power_profile(int profile)
+{
+	property_set_int(POWER_PROFILE_PROPERTY, profile);
+	ALOGW("%s: set power profile = %d", TAG, profile);
+}
+
+static void power_hint(__attribute__ ((unused)) struct power_module *module, power_hint_t hint, void *data) { 
+	switch (hint) {
+		case POWER_HINT_SET_PROFILE:
+			pthread_mutex_lock(&lock);
+			set_power_profile(*(int32_t *)data);
+			pthread_mutex_unlock(&lock);
+		break;
+	}
+}
+
+static void set_feature(__attribute__ ((unused)) struct power_module *module, feature_t feature, int state)
+{
+	switch (feature) {
+		case POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
+			ALOGW("%s: Double tap to wake\n", TAG);
+			char tmp_str[BUF_SIZE];
+			snprintf(tmp_str, BUF_SIZE, "%d", state);
+			sysfs_write(TAP_TO_WAKE_NODE, tmp_str);
+		break;
+		default:
+			ALOGE("Error setting the feature, it doesn't exist %d\n", feature);
+	}
+	ALOGW("%s: feature = %d\n", TAG, feature);
+}
+
+static int get_feature(__attribute__((unused)) struct power_module *module, feature_t feature)
+{
+	switch (feature) {
+		case POWER_FEATURE_SUPPORTED_PROFILES:
+			ALOGW("%s: power profiles POWER_FEATURE_SUPPORTED_PROFILES\n", TAG);
+			return PROFILE_MAX;
+		default:
+			ALOGE("Error getting the feature, it doesn't exist %d\n", feature);
+	}
+	return -1;
 }
 
 static struct hw_module_methods_t power_module_methods = {
-    open: NULL,
+	.open = NULL,
 };
 
 struct power_module HAL_MODULE_INFO_SYM = {
-    common: {
-        tag: HARDWARE_MODULE_TAG,
-        module_api_version: POWER_MODULE_API_VERSION_0_2,
-        hal_api_version: HARDWARE_HAL_API_VERSION,
-        id: POWER_HARDWARE_MODULE_ID,
-        name: "mocha smoke PowerHAL",
-        author: "artt",
-        methods: &power_module_methods,
-        dso: NULL,
-        reserved: {0},
-    },
+	.common = {
+		.tag = HARDWARE_MODULE_TAG,
+		.module_api_version = POWER_MODULE_API_VERSION_0_3,
+		.hal_api_version = HARDWARE_HAL_API_VERSION,
+		.id = POWER_HARDWARE_MODULE_ID,
+		.name = "mocha smoke PowerHAL",
+		.author = "arttttt",
+		.methods = &power_module_methods,
+		.dso = NULL,
+        .reserved = {0},
+	},
 
-    init: power_init,
-    setInteractive: power_set_interactive,
-    powerHint: power_hint,
-    setFeature: set_feature,
+	.init = power_init,
+	.setInteractive = power_set_interactive,
+	.powerHint = power_hint,
+	.setFeature = set_feature,
+	.getFeature = get_feature
 };
