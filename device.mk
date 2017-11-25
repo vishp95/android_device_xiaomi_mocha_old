@@ -143,9 +143,9 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     wpa_supplicant.conf
 
-# Light
-#PRODUCT_PACKAGES += \
-#    lights.tegra
+# Custom tiles
+PRODUCT_PACKAGES += \
+    PerformanceTile
 
 PRODUCT_CHARACTERISTICS := tablet
 
@@ -173,6 +173,9 @@ PRODUCT_COPY_FILES += \
 
 # Packaging
 BLOCK_BASED_OTA := false
+
+# Nvidia enhancements
+NV_ANDROID_FRAMEWORK_ENHANCEMENTS := true
 
 # Permissions
 PRODUCT_COPY_FILES += \
