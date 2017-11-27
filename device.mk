@@ -147,6 +147,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     PerformanceTile
 
+# wifi and bt macs settter
+PRODUCT_PACKAGES += \
+    conn_init
+
 PRODUCT_CHARACTERISTICS := tablet
 
 # Filesystem management tools
