@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.arttttt.performancetile;
+package com.android.arttttt.performanceprofilestile;
 
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
+import android.util.Log;
 
 import java.util.List;
 import java.util.ArrayList;
