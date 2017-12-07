@@ -23,6 +23,7 @@ on property:sys.perf.profile=0
   write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 396000000
+  write /sys/module/input_cfboost/parameters/boost_enabled 1
   write /sys/module/input_cfboost/parameters/boost_freq 696000
   write /sys/module/input_cfboost/parameters/boost_time 75
   write /sys/module/input_cfboost/parameters/boost_emc 0
@@ -37,49 +38,42 @@ on property:sys.perf.profile=0
 # bias power save
 on property:sys.perf.profile=3
   write /sys/block/mmcblk0/queue/scheduler "deadline"
-  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "smartmax"
+  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "elementalx"
   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1530000
   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 204000
   write /sys/kernel/tegra_gpu/gpu_floor_state 1
   write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 540000000
-  write /sys/module/input_cfboost/parameters/boost_freq 1044000
-  write /sys/module/input_cfboost/parameters/boost_time 100
-  write /sys/module/input_cfboost/parameters/boost_emc 0
-  write /sys/module/input_cfboost/parameters/boost_gpu 252000
+  write /sys/module/input_cfboost/parameters/boost_enabled 0
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 3
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
-  write /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq 1044000
-  write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 1326000
-  write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 1326000
-  write /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration 60000
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost 1
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost_min_freq 1044000
+  write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
+  write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
+  write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate 20000
+  write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate_min 10000
 
 # balanced
 on property:sys.perf.profile=1
   write /sys/block/mmcblk0/queue/scheduler "deadline"
-  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "elementalx"
   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1836000
   write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 204000
   write /sys/kernel/tegra_gpu/gpu_floor_state 1
   write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 708000000
-  write /sys/module/input_cfboost/parameters/boost_freq 1044000
-  write /sys/module/input_cfboost/parameters/boost_time 100
-  write /sys/module/input_cfboost/parameters/boost_emc 0
-  write /sys/module/input_cfboost/parameters/boost_gpu 252000
+  write /sys/module/input_cfboost/parameters/boost_enabled 0
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 4
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
-  write /sys/devices/system/cpu/cpufreq/interactive/target_loads 85
-  write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1044000
-  write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 99
-  write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
-  write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 60000
-  write /sys/devices/system/cpu/cpufreq/interactive/io_busy_threshold 100
-  write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
-  write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 60000
-  write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 10000
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost 1
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost_min_freq 1224000
+  write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
+  write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
+  write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate 15000
+  write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate_min 10000
 
 # high performance
 on property:sys.perf.profile=2
@@ -91,6 +85,7 @@ on property:sys.perf.profile=2
   write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 852000000
+  write /sys/module/input_cfboost/parameters/boost_enabled 1
   write /sys/module/input_cfboost/parameters/boost_freq 1044000
   write /sys/module/input_cfboost/parameters/boost_time 100
   write /sys/module/input_cfboost/parameters/boost_emc 0
@@ -118,3 +113,51 @@ on property:sys.perf.undervoltage=1
 on property:sys.perf.undervoltage=0
   write /sys/kernel/debug/clock/vdd_core_offs 0
   write /sys/kernel/debug/clock/vdd_gpu_offs 0
+
+# old profiles
+# bias power save
+#on property:sys.perf.profile=3
+#  write /sys/block/mmcblk0/queue/scheduler "deadline"
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "smartmax"
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1530000
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 204000
+#  write /sys/kernel/tegra_gpu/gpu_floor_state 1
+#  write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
+#  write /sys/kernel/tegra_gpu/gpu_cap_state 1
+#  write /sys/kernel/tegra_gpu/gpu_cap_rate 540000000
+#  write /sys/module/input_cfboost/parameters/boost_freq 1044000
+#  write /sys/module/input_cfboost/parameters/boost_time 100
+#  write /sys/module/input_cfboost/parameters/boost_emc 0
+#  write /sys/module/input_cfboost/parameters/boost_gpu 252000
+#  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 3
+#  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
+#  write /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq 1044000
+#  write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 1326000
+#  write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 1326000
+#  write /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration 60000
+
+# balanced
+#on property:sys.perf.profile=1
+#  write /sys/block/mmcblk0/queue/scheduler "deadline"
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1836000
+#  write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 204000
+#  write /sys/kernel/tegra_gpu/gpu_floor_state 1
+#  write /sys/kernel/tegra_gpu/gpu_floor_rate 72000000
+#  write /sys/kernel/tegra_gpu/gpu_cap_state 1
+#  write /sys/kernel/tegra_gpu/gpu_cap_rate 708000000
+#  write /sys/module/input_cfboost/parameters/boost_freq 1044000
+#  write /sys/module/input_cfboost/parameters/boost_time 100
+#  write /sys/module/input_cfboost/parameters/boost_emc 0
+#  write /sys/module/input_cfboost/parameters/boost_gpu 252000
+#  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 4
+#  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
+#  write /sys/devices/system/cpu/cpufreq/interactive/target_loads 85
+#  write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1044000
+#  write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 99
+#  write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
+#  write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 60000
+#  write /sys/devices/system/cpu/cpufreq/interactive/io_busy_threshold 100
+#  write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+#  write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 60000
+#  write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 10000
