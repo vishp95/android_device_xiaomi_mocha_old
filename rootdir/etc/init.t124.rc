@@ -27,7 +27,7 @@ on boot
 
     # Smoke kernel default governor settings
     write /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq 1326000
-    write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 1632000
+    write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 1428000
     write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 1326000
     write /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration 45000
 
@@ -44,10 +44,10 @@ on boot
 
     write /sys/module/input_cfboost/parameters/boost_freq 1326000
     write /sys/module/input_cfboost/parameters/boost_emc 396000
-    write /sys/module/input_cfboost/parameters/boost_gpu 396000
-    write /sys/module/input_cfboost/parameters/boost_time 120
+    write /sys/module/input_cfboost/parameters/boost_gpu 252000
+    write /sys/module/input_cfboost/parameters/boost_time 75
     write /sys/module/input_cfboost/parameters/boost_cpus 1
-    write /sys/block/mmcblk0/queue/scheduler "deadline"
+    write /sys/block/mmcblk0/queue/scheduler "row"
     write /sys/block/mmcblk0/queue/nr_requests 4
 
 on init
