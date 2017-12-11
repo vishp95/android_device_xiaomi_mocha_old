@@ -48,7 +48,7 @@ on property:sys.perf.profile=3
   write /sys/module/input_cfboost/parameters/boost_enabled 0
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 3
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
-  write /sys/devices/system/cpu/cpufreq/elementalx/gboost 1
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost 0
   write /sys/devices/system/cpu/cpufreq/elementalx/gboost_min_freq 1044000
   write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
   write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
@@ -68,7 +68,7 @@ on property:sys.perf.profile=1
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 4
   write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
   write /sys/devices/system/cpu/cpufreq/elementalx/gboost 1
-  write /sys/devices/system/cpu/cpufreq/elementalx/gboost_min_freq 1224000
+  write /sys/devices/system/cpu/cpufreq/elementalx/gboost_min_freq 1044000
   write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
   write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
   write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate 10000
