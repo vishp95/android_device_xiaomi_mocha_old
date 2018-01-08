@@ -1,9 +1,5 @@
 [
  {
-   "repository": "android_hardware_nvidia_power",
-   "target_path": "hardware/nvidia/power"
- },
- {
    "repository": "android_hardware_nvidia_thermal",
    "target_path": "hardware/nvidia/thermal"
  },
