@@ -23,9 +23,7 @@ on boot
     # bluetooth MAC address programming
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown bluetooth net_bt_stack /system/etc/bluetooth
-    chown bluetooth net_bt_stack /mnt/factory/bluetooth/bt_mac.txt
-    setprop ro.bt.bdaddr_path "/mnt/factory/bluetooth/bt_mac.txt"
-
+    chown bluetooth net_bt_stack /data/misc/bluetooth/bt_mac.conf
 
 on post-fs-data
     mkdir /data/misc/wifi 0771 wifi wifi
