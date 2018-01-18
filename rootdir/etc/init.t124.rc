@@ -53,6 +53,10 @@ on boot
 
 	write /sys/module/workqueue/parameters/power_efficient 1
 
+    # Little VM tweaks
+    write /proc/sys/vm/swappiness 80
+    write /proc/sys/vm/vfs_cache_pressure 100
+
 on init
     # Mount a tmpfs into /mnt/tmp for hosting nvram, phs shared memory
     mkdir /mnt/tmp 0770 system system
