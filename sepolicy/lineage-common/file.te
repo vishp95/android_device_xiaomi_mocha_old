@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# /sys/devices/platform/pwm-backlight.*
+# /sys/devices/platform/7000c000.i2c/i2c-0/0-002c
 type sysfs_pwm_backlight, fs_type, sysfs_type;
