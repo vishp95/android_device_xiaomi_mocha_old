@@ -32,7 +32,7 @@
 | Shipped Android Version | 4.4.2                             |
 | Storage                 | 16/32/64GB                           |
 | MicroSD                 | Up to 128GB                       |
-| Battery                 | 5197 mAh                          |
+| Battery                 | 6700 mAh                          |
 | Dimentions              | 221 x 126 x 9.2 mm                |
 | Display                 | 1536 x 2048 pixels                |
 | Release Date            | July 29, 2014                     |
