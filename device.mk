@@ -32,6 +32,9 @@ DEVICE_PACKAGE_OVERLAYS += \
 # HIDL HALs
 $(call inherit-product, device/xiaomi/mocha/hidl.mk)
 
+# Graphics shim
+PRODUCT_PACKAGES += libs
+
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.tn8 \
