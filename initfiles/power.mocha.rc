@@ -28,8 +28,9 @@ on property:sys.perf.profile=0
   write /sys/module/input_cfboost/parameters/boost_time 75
   write /sys/module/input_cfboost/parameters/boost_emc 0
   write /sys/module/input_cfboost/parameters/boost_gpu 252000
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 2
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 1
+  write /sys/devices/system/cpu/cpu1/online 1
+  write /sys/devices/system/cpu/cpu2/online 0
+  write /sys/devices/system/cpu/cpu3/online 0
   write /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq 564000
   write /sys/devices/system/cpu/cpufreq/smartmax/boost_freq 696000
   write /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq 696000
@@ -46,8 +47,9 @@ on property:sys.perf.profile=3
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 540000000
   write /sys/module/input_cfboost/parameters/boost_enabled 0
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 3
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
+  write /sys/devices/system/cpu/cpu1/online 1
+  write /sys/devices/system/cpu/cpu2/online 1
+  write /sys/devices/system/cpu/cpu3/online 0
   write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
   write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
   write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate 10000
@@ -63,8 +65,9 @@ on property:sys.perf.profile=1
   write /sys/kernel/tegra_gpu/gpu_cap_state 1
   write /sys/kernel/tegra_gpu/gpu_cap_rate 708000000
   write /sys/module/input_cfboost/parameters/boost_enabled 0
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 4
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 2
+  write /sys/devices/system/cpu/cpu1/online 1
+  write /sys/devices/system/cpu/cpu2/online 1
+  write /sys/devices/system/cpu/cpu3/online 1
   write /sys/devices/system/cpu/cpufreq/elementalx/input_event_timeout 100
   write /sys/devices/system/cpu/cpufreq/elementalx/input_min_freq 1044000
   write /sys/devices/system/cpu/cpufreq/elementalx/sampling_rate 10000
@@ -84,8 +87,9 @@ on property:sys.perf.profile=2
   write /sys/module/input_cfboost/parameters/boost_time 100
   write /sys/module/input_cfboost/parameters/boost_emc 0
   write /sys/module/input_cfboost/parameters/boost_gpu 252000
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_max_cpu_online 4
-  write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/custom_min_cpu_online 3
+  write /sys/devices/system/cpu/cpu1/online 1
+  write /sys/devices/system/cpu/cpu2/online 1
+  write /sys/devices/system/cpu/cpu3/online 1
   write /sys/devices/system/cpu/cpufreq/interactive/target_loads 80
   write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1428000
   write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 99
