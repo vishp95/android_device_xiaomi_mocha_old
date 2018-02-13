@@ -10,7 +10,7 @@ on boot
     write /sys/module/cpuidle_t11x/parameters/stop_mc_clk_in_idle 1
     write /sys/devices/system/cpu/cpuquiet/current_governor runnable
     write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/no_lp 0
-    write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable 1
+    write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable 0
     write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/down_delay 500
     write /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/idle_top_freq 204000
 
