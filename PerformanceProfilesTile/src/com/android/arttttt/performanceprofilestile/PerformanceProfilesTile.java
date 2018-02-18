@@ -86,6 +86,7 @@ public class PerformanceProfilesTile extends TileService {
 		getQsTile().setLabel(getString(R.string.bias_power_save_profile_text));
 		break;
 	}
+	getQsTile().setState(Tile.STATE_ACTIVE);
 	getQsTile().updateTile();
     }
 }
