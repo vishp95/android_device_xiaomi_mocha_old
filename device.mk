@@ -29,6 +29,9 @@ $(call inherit-product-if-exists, vendor/nvidia/shield/mocha.mk)
 DEVICE_PACKAGE_OVERLAYS += \
     device/xiaomi/mocha/overlay
 
+# HIDL HALs
+$(call inherit-product, device/xiaomi/mocha/hidl.mk)
+
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.tn8 \
