@@ -109,9 +109,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/aptXHD/libaptXHD-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptXHD-1.0.0-rel-Android21-ARMv7A.so \
     $(LOCAL_PATH)/aptXHD/libaptXScheduler.so:system/vendor/lib/libaptXScheduler.so
 
-# busybox
-PRODUCT_PACKAGES += busybox
-
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
@@ -129,7 +126,6 @@ PRODUCT_PACKAGES += \
     libtinyalsa \
     xaplay \
     enctune.conf
-
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
