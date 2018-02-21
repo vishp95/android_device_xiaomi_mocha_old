@@ -35,3 +35,5 @@ drm.service.enabled=true
 ro.radio.noril=yes
 
 media.stagefright.less-secure=true
+
+persist.debug.wfd.enable=1
