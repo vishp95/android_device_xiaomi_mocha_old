@@ -41,6 +41,7 @@ public class PerformanceProfilesTile extends TileService {
 	mPerf = PerformanceManager.getInstance(this);
 	mProfiles = new ArrayList<>(mPerf.getPowerProfiles());
 	mCurrentProfile = mPerf.getActivePowerProfile().getId();
+	getQsTile().setState(Tile.STATE_ACTIVE);
 	updateTile();
     }
 
@@ -86,7 +87,6 @@ public class PerformanceProfilesTile extends TileService {
 		getQsTile().setLabel(getString(R.string.bias_power_save_profile_text));
 		break;
 	}
-	getQsTile().setState(Tile.STATE_ACTIVE);
 	getQsTile().updateTile();
     }
 }
