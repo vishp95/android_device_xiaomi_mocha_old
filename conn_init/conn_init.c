@@ -1,6 +1,6 @@
 
 /*
- * Copyright (C) 2017 arttttt
+ * Copyright (C) 2017-2018 Artyom Bambalov <artem-bambalov@yandex.ru>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
-#include <string.h>
 #include <cutils/log.h>
 #include <cutils/properties.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define TAG "conn_init"
 #define MAC_PARTION "/dev/block/platform/700b0600.sdhci/by-name/BKB"
@@ -27,8 +27,10 @@
 #define BT_MAC_PROP "ro.bt.bdaddr_path"
 #define BT_MAC_PROP1 "persist.service.bdroid.bdaddr"
 #define BT_MAC_PROP2 "ro.boot.btmacaddr"
-#define WIFI_MAC_PROP "/sys/module/bcmdhd/parameters/mac"
-#define BT_MAC_FILE "/data/misc/bluetooth/bt_mac.conf"
+#define WIFI_MAC_FILE "/system/etc/mocha_macaddr.txt"
+#define BT_MAC_FILE "/system/etc/mocha_btmacaddr.txt"
+#define BT_MAC_TAG "XIAOMIBT!"
+#define WIFI_MAC_TAG "XIAOMIWF!"
 
 void set_bt_mac(FILE *fp) {
 	char buf[30];
@@ -37,6 +39,13 @@ void set_bt_mac(FILE *fp) {
 
 	fseek(fp, 0, SEEK_SET);
 	fread(buf, sizeof(char), 22, fp);
+
+	if (strncmp(buf, BT_MAC_TAG, 9) != 0) {
+		ALOGE("%s: buffer does not contain %s tag. exit", TAG, BT_MAC_TAG);
+		goto exit;
+	} else {
+		ALOGI("%s: %s was found", TAG, BT_MAC_TAG);
+	}
 	
 	bmfp = fopen(BT_MAC_FILE, "w");
 	if (bmfp == NULL) {
@@ -58,6 +67,7 @@ void set_bt_mac(FILE *fp) {
 	property_set(BT_MAC_PROP, BT_MAC_FILE);
 	property_set(BT_MAC_PROP1, addr);
 	property_set(BT_MAC_PROP2, addr);
+	system("chown bluetooth net_bt_stack /system/etc/mocha_btmacaddr.txt");
 	
 exit:
 	return;
@@ -66,11 +76,25 @@ exit:
 void set_wifi_mac(FILE *fp)
 {
 	char buf[30];
+	char addr[18];
 	
 	fseek(fp, sizeof(char) * 22, SEEK_SET);
 	fread(buf, sizeof(char), 22, fp);
 
-	snprintf(buf, 30, "0x%x,0x%x,0x%x,0x%x,0x%x,0x%x\n",
+	if (strncmp(buf, WIFI_MAC_TAG, 9) != 0) {
+		ALOGE("%s: buffer does not contain %s tag. exit", TAG, WIFI_MAC_TAG);
+		goto exit;
+	} else {
+		ALOGI("%s: %s was found", TAG, WIFI_MAC_TAG);
+	}
+
+	FILE *wfp = fopen(WIFI_MAC_FILE, "w");
+	if (wfp == NULL) {
+		ALOGE("%s: Can't open %s error: %d", TAG, WIFI_MAC_FILE, errno);
+		goto exit;
+	}
+
+	sprintf(addr, "%02x:%02x:%02x:%02x:%02x:%02x",
 		(unsigned char)buf[14],
 		(unsigned char)buf[13],
 		(unsigned char)buf[12],
@@ -78,13 +102,9 @@ void set_wifi_mac(FILE *fp)
 		(unsigned char)buf[10],
 		(unsigned char)buf[9]);
 
-	FILE *wfp = fopen(WIFI_MAC_PROP, "w");
-	if (wfp == NULL) {
-		ALOGE("%s: Can't open %s error: %d", TAG, WIFI_MAC_PROP, errno);
-		goto exit;
-	}
-	fwrite(buf, sizeof(unsigned char), 30, wfp);
+	fprintf(wfp, "%s", addr);
 	fclose(wfp);
+	system("chmod 644 /system/etc/mocha_macaddr.txt");
 	
 exit:
 	return;
@@ -102,8 +122,10 @@ int main(void)
 			goto exit;
 		}
 	}
+	system("mount -o remount,rw /system");
 	set_wifi_mac(fp);
 	set_bt_mac(fp);
+	system("mount -o remount,ro /system");
 	fclose(fp);
 
 exit:
