@@ -17,7 +17,12 @@ TARGET_BOOTLOADER_BOARD_NAME := mocha
 BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --dt device/xiaomi/mocha/dt.img
+TARGET_KERNEL_SOURCE := kernel/xiaomi/mocha
+TARGET_KERNEL_CONFIG := tegra12_android_defconfig
+BOARD_KERNEL_IMAGE_NAME := zImage
+BOARD_CUSTOM_BOOTIMG_MK := device/xiaomi/mocha/mkbootimg.mk
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin
+KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
 
 BOARD_USE_CUSTOM_RECOVERY_FONT :=  \"roboto_23x41.h\"
 BRIGHTNESS_SYS_FILE := /sys/class/leds/button-backlight/brightness	  
@@ -39,8 +44,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 13742637056
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 PRODUCT_COPY_FILES += device/xiaomi/mocha/twrp.fstab:recovery/root/etc/twrp.fstab
-
-TARGET_PREBUILT_KERNEL := device/xiaomi/mocha/kernel
 
 # MultiROM
 MR_PIXEL_FORMAT := RGB_565
