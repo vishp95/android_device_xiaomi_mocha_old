@@ -2,15 +2,12 @@
 
 /recovery             emmc      /dev/block/platform/sdhci-tegra.3/by-name/recovery                     
 /boot                 emmc      /dev/block/platform/sdhci-tegra.3/by-name/boot
-/system               ext4      /dev/block/platform/sdhci-tegra.3/by-name/system
-/system               f2fs      /dev/block/platform/sdhci-tegra.3/by-name/APP 
+/system               ext4      /dev/block/platform/sdhci-tegra.3/by-name/system 
 /cache                ext4      /dev/block/platform/sdhci-tegra.3/by-name/cache
-/cache                f2fs      /dev/block/platform/sdhci-tegra.3/by-name/CAC
 /misc                 emmc      /dev/block/platform/sdhci-tegra.3/by-name/misc
 /staging              emmc      /dev/block/platform/sdhci-tegra.3/by-name/staging
 /metadata             emmc      /dev/block/platform/sdhci-tegra.3/by-name/MDA                     
 /persist              ext4      /dev/block/platform/sdhci-tegra.3/by-name/persist
 /data                 ext4      /dev/block/platform/sdhci-tegra.3/by-name/userdata
-/data                 f2fs      /dev/block/platform/sdhci-tegra.3/by-name/UDA                    rw,nosuid,nodev,noatime,nodiratime,inline_xattr,inline_data,flush_merge wait,check,encryptable=/dev/block/platform/sdhci-tegra.3/by-name/MDA
 /external_sd          vfat      /dev/block/platform/sdhci-tegra.2/by-num/p1           flags=display="MICRO SD";storage;wipeingui;removable
 /usb-otg              vfat      /dev/block/sda1 /dev/block/sda                        flags=display="USB OTG";storage;wipeingui;removable
