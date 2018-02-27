@@ -28,6 +28,7 @@ BOARD_USE_CUSTOM_RECOVERY_FONT :=  \"roboto_23x41.h\"
 BRIGHTNESS_SYS_FILE := /sys/class/leds/button-backlight/brightness	  
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
 TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 
 TW_THEME := portrait_hdpi
