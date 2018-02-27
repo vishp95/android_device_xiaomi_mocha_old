@@ -14,7 +14,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 
 TARGET_BOOTLOADER_BOARD_NAME := mocha
 
-BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive androidboot.hardware=tn8
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 TARGET_KERNEL_SOURCE := kernel/xiaomi/mocha
@@ -58,4 +58,4 @@ MR_DEVICE_HOOKS := device/xiaomi/mocha/multirom/mr_hooks.c
 MR_DEVICE_HOOKS_VER := 3
 MR_DEVICE_VARIANTS := mocha
 MR_USE_MROM_FSTAB := true
-TARGET_RECOVERY_IS_MULTIROM := false
+TARGET_RECOVERY_IS_MULTIROM := true
