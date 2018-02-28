@@ -36,16 +36,13 @@ const char *mr_init_devices[] = {
 	// Internal SD
 	"/sys/block/mmcblk0",
 	"/sys/devices/platform/sdhci-tegra.3",
-	"/sys/devices/platform/sdhci-tegra.3/mmc_host/mmc0",
-	"/sys/devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0:0001",
-	"/sys/devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0:0001/block/mmcblk0*",
+	"/sys/devices/platform/sdhci-tegra.3/mmc_host/mmc0*",
 	
 	// External SD
 	"/sys/block/mmcblk1",
+	"/sys/block/mmcblk1p1",
 	"/sys/devices/platform/sdhci-tegra.2",
-	"/sys/devices/platform/sdhci-tegra.2/mmc_host/mmc1",
-	"/sys/devices/platform/sdhci-tegra.2/mmc_host/mmc1/mmc1:1234",
-	"/sys/devices/platform/sdhci-tegra.2/mmc_host/mmc1/mmc1:1234/block/mmcblk1*",
+	"/sys/devices/platform/sdhci-tegra.2/mmc_host/mmc1*",
 	
 	// SD Block Devices
 	"/sys/bus/mmc",
