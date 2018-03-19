@@ -76,11 +76,11 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/xiaomi/mocha/bluetooth
 USE_OPENGL_RENDERER := true
 BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
 
-# CMHW
+# LINEAGEHW
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS := \
-    hardware/cyanogen/cmhw \
-    device/xiaomi/mocha/cmhw
+    hardware/lineage/lineagehw \
+    device/xiaomi/mocha/lineagehw
 
 # Offmode Charging
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
