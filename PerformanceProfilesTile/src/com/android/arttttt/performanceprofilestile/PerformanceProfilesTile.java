@@ -23,8 +23,8 @@ import android.util.Log;
 import java.util.List;
 import java.util.ArrayList;
 
-import cyanogenmod.power.PerformanceManager;
-import cyanogenmod.power.PerformanceProfile;
+import lineageos.power.PerformanceManager;
+import lineageos.power.PerformanceProfile;
 
 public class PerformanceProfilesTile extends TileService {
 
