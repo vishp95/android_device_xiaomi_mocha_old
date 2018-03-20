@@ -33,7 +33,8 @@ DEVICE_PACKAGE_OVERLAYS += \
 $(call inherit-product, device/xiaomi/mocha/hidl.mk)
 
 # Graphics shim
-PRODUCT_PACKAGES += libs
+PRODUCT_PACKAGES += libs \
+                    libshim_zw
 
 # Ramdisk
 PRODUCT_PACKAGES += \
