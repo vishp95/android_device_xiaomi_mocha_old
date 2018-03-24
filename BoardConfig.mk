@@ -80,10 +80,7 @@ USE_OPENGL_RENDERER := true
 BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
 
 # LINEAGEHW
-BOARD_USES_CYANOGEN_HARDWARE := true
-BOARD_HARDWARE_CLASS := \
-    hardware/lineage/lineagehw \
-    device/xiaomi/mocha/lineagehw
+BOARD_HARDWARE_CLASS := device/xiaomi/mocha/lineagehw
 
 # Offmode Charging
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
