@@ -92,7 +92,7 @@ static const char *format_lookup[] = {
 /* Returns a human readable name for the format associated with bit_index,
  * NULL if bit_index is not known.
  */
-inline const char *pcm_get_format_name(unsigned bit_index)
+static inline const char *pcm_get_format_name(unsigned bit_index)
 {
     return bit_index < ARRAY_SIZE(format_lookup) ? format_lookup[bit_index] : NULL;
 }
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     unsigned int card = 0;
     int i;
 
-    if (argc < 3) {
+    if ((argc == 2) && (strcmp(argv[1], "--help") == 0)) {
         fprintf(stderr, "Usage: %s -D card -d device\n", argv[0]);
         return 1;
     }
@@ -125,11 +125,11 @@ int main(int argc, char **argv)
             argv++;
     }
 
-    printf("Info for card %d, device %d:\n", card, device);
+    printf("Info for card %u, device %u:\n", card, device);
 
     for (i = 0; i < 2; i++) {
         struct pcm_params *params;
-        struct pcm_mask *m;
+        const struct pcm_mask *m;
         unsigned int min;
         unsigned int max;
 
