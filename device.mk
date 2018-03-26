@@ -184,7 +184,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
 # Power
-PRODUCT_PACKAGES += power.tegra
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-service.mocha
 
 # Sensors
 PRODUCT_PACKAGES += \
