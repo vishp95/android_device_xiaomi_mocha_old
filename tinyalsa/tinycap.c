@@ -57,14 +57,13 @@ struct wav_header {
 };
 
 int capturing = 1;
-int prinfo = 1;
 
 unsigned int capture_sample(FILE *file, unsigned int card, unsigned int device,
                             unsigned int channels, unsigned int rate,
                             enum pcm_format format, unsigned int period_size,
                             unsigned int period_count);
 
-void sigint_handler(int sig)
+void sigint_handler(int sig __unused)
 {
     capturing = 0;
 }
@@ -82,25 +81,17 @@ int main(int argc, char **argv)
     unsigned int period_size = 1024;
     unsigned int period_count = 4;
     enum pcm_format format;
-    int no_header = 0;
 
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s {file.wav | --} [-D card] [-d device] [-c channels] "
-                "[-r rate] [-b bits] [-p period_size] [-n n_periods]\n\n"
-                "Use -- for filename to send raw PCM to stdout\n", argv[0]);
+        fprintf(stderr, "Usage: %s file.wav [-D card] [-d device] [-c channels] "
+                "[-r rate] [-b bits] [-p period_size] [-n n_periods]\n", argv[0]);
         return 1;
     }
 
-    if (strcmp(argv[1],"--") == 0) {
-        file = stdout;
-        prinfo = 0;
-        no_header = 1;
-    } else {
-        file = fopen(argv[1], "wb");
-        if (!file) {
-            fprintf(stderr, "Unable to create file '%s'\n", argv[1]);
-            return 1;
-        }
+    file = fopen(argv[1], "wb");
+    if (!file) {
+        fprintf(stderr, "Unable to create file '%s'\n", argv[1]);
+        return 1;
     }
 
     /* parse command line arguments */
@@ -169,26 +160,20 @@ int main(int argc, char **argv)
     header.data_id = ID_DATA;
 
     /* leave enough room for header */
-    if (!no_header) {
-        fseek(file, sizeof(struct wav_header), SEEK_SET);
-    }
+    fseek(file, sizeof(struct wav_header), SEEK_SET);
 
     /* install signal handler and begin capturing */
     signal(SIGINT, sigint_handler);
     frames = capture_sample(file, card, device, header.num_channels,
                             header.sample_rate, format,
                             period_size, period_count);
-    if (prinfo) {
-        printf("Captured %d frames\n", frames);
-    }
+    printf("Captured %d frames\n", frames);
 
     /* write header now all information is known */
-    if (!no_header) {
-        header.data_sz = frames * header.block_align;
-        header.riff_sz = header.data_sz + sizeof(header) - 8;
-        fseek(file, 0, SEEK_SET);
-        fwrite(&header, sizeof(struct wav_header), 1, file);
-    }
+    header.data_sz = frames * header.block_align;
+    header.riff_sz = header.data_sz + sizeof(header) - 8;
+    fseek(file, 0, SEEK_SET);
+    fwrite(&header, sizeof(struct wav_header), 1, file);
 
     fclose(file);
 
@@ -206,6 +191,7 @@ unsigned int capture_sample(FILE *file, unsigned int card, unsigned int device,
     unsigned int size;
     unsigned int bytes_read = 0;
 
+    memset(&config, 0, sizeof(config));
     config.channels = channels;
     config.rate = rate;
     config.period_size = period_size;
@@ -231,10 +217,8 @@ unsigned int capture_sample(FILE *file, unsigned int card, unsigned int device,
         return 0;
     }
 
-    if (prinfo) {
-        printf("Capturing sample: %u ch, %u hz, %u bit\n", channels, rate,
+    printf("Capturing sample: %u ch, %u hz, %u bit\n", channels, rate,
            pcm_format_to_bits(format));
-    }
 
     while (capturing && !pcm_read(pcm, buffer, size)) {
         if (fwrite(buffer, 1, size, file) != size) {
