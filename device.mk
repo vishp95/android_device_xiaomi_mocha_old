@@ -129,6 +129,7 @@ PRODUCT_PACKAGES += \
     libtinycompress \
     tinycap_mocha \
     tinymix_mocha \
+    tinypcminfo_mocha \
     tinyplay_mocha \
     libtinyalsa_mocha \
     libtinyalsa \

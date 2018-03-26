@@ -1,6 +1,7 @@
 /* asoundlib.h
 **
 ** Copyright 2011, The Android Open Source Project
+** Copyright (C) 2012 Freescale Semiconductor, Inc.
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are met:
@@ -58,18 +59,45 @@ struct pcm;
 #define PCM_MONOTONIC  0x00000008 /* see pcm_get_htimestamp */
 
 /* PCM runtime states */
-#define	PCM_STATE_RUNNING	3
+#define	PCM_STATE_OPEN		0
+#define	PCM_STATE_SETUP		1
+#define	PCM_STATE_PREPARED	2
+#define	PCM_STATE_RUNNING		3
 #define	PCM_STATE_XRUN		4
 #define	PCM_STATE_DRAINING	5
+#define	PCM_STATE_PAUSED		6
 #define	PCM_STATE_SUSPENDED	7
 #define	PCM_STATE_DISCONNECTED	8
 
+#define PCM_HW_PARAM_ACCESS 0
+#define PCM_HW_PARAM_FORMAT 1
+#define PCM_HW_PARAM_SUBFORMAT 2
+#define PCM_HW_PARAM_FIRST_MASK PCM_HW_PARAM_ACCESS
+#define PCM_HW_PARAM_LAST_MASK PCM_HW_PARAM_SUBFORMAT
+#define PCM_HW_PARAM_SAMPLE_BITS 8
+#define PCM_HW_PARAM_FRAME_BITS 9
+#define PCM_HW_PARAM_CHANNELS 10
+#define PCM_HW_PARAM_RATE 11
+#define PCM_HW_PARAM_PERIOD_TIME 12
+#define PCM_HW_PARAM_PERIOD_SIZE 13
+#define PCM_HW_PARAM_PERIOD_BYTES 14
+#define PCM_HW_PARAM_PERIODS 15
+#define PCM_HW_PARAM_BUFFER_TIME 16
+#define PCM_HW_PARAM_BUFFER_SIZE 17
+#define PCM_HW_PARAM_BUFFER_BYTES 18
+#define PCM_HW_PARAM_TICK_TIME 19
+#define PCM_HW_PARAM_FIRST_INTERVAL PCM_HW_PARAM_SAMPLE_BITS
+#define PCM_HW_PARAM_LAST_INTERVAL PCM_HW_PARAM_TICK_TIME
+#define PCM_HW_PARAMS_NORESAMPLE (1<<0)
+
 /* Bit formats */
 enum pcm_format {
-    PCM_FORMAT_S16_LE = 0,
-    PCM_FORMAT_S32_LE,
-    PCM_FORMAT_S8,
-    PCM_FORMAT_S24_LE,
+    PCM_FORMAT_INVALID = -1,
+    PCM_FORMAT_S16_LE = 0,  /* 16-bit signed */
+    PCM_FORMAT_S32_LE,      /* 32-bit signed */
+    PCM_FORMAT_S8,          /* 8-bit signed */
+    PCM_FORMAT_S24_LE,      /* 24-bits in 4-bytes */
+    PCM_FORMAT_S24_3LE,     /* 24-bits in 3-bytes */
 
     PCM_FORMAT_MAX,
 };
@@ -87,17 +115,26 @@ struct pcm_config {
     unsigned int period_count;
     enum pcm_format format;
 
-    /* Values to use for the ALSA start, stop and silence thresholds.  Setting
-     * any one of these values to 0 will cause the default tinyalsa values to be
-     * used instead.  Tinyalsa defaults are as follows.
+    /* Values to use for the ALSA start, stop and silence thresholds, and
+     * silence size.  Setting any one of these values to 0 will cause the
+     * default tinyalsa values to be used instead.
+     * Tinyalsa defaults are as follows.
      *
      * start_threshold   : period_count * period_size
      * stop_threshold    : period_count * period_size
      * silence_threshold : 0
+     * silence_size      : 0
      */
     unsigned int start_threshold;
     unsigned int stop_threshold;
     unsigned int silence_threshold;
+    unsigned int silence_size;
+
+    /* Minimum number of frames available before pcm_mmap_write() will actually
+     * write into the kernel buffer. Only used if the stream is opened in mmap mode
+     * (pcm_open() called with PCM_MMAP flag set).   Use 0 for default.
+     */
+    int avail_min;
 };
 
 /* PCM parameters */
@@ -147,11 +184,34 @@ struct pcm_params *pcm_params_get(unsigned int card, unsigned int device,
 void pcm_params_free(struct pcm_params *pcm_params);
 
 struct pcm_mask *pcm_params_get_mask(struct pcm_params *pcm_params,
-        enum pcm_param param);
+                                     enum pcm_param param);
 unsigned int pcm_params_get_min(struct pcm_params *pcm_params,
                                 enum pcm_param param);
+void pcm_params_set_min(struct pcm_params *pcm_params,
+                                enum pcm_param param, unsigned int val);
 unsigned int pcm_params_get_max(struct pcm_params *pcm_params,
                                 enum pcm_param param);
+void pcm_params_set_max(struct pcm_params *pcm_params,
+                                enum pcm_param param, unsigned int val);
+
+/* Converts the pcm parameters to a human readable string.
+ * The string parameter is a caller allocated buffer of size bytes,
+ * which is then filled up to size - 1 and null terminated,
+ * if size is greater than zero.
+ * The return value is the number of bytes copied to string
+ * (not including null termination) if less than size; otherwise,
+ * the number of bytes required for the buffer.
+ */
+int pcm_params_to_string(struct pcm_params *params, char *string, unsigned int size);
+
+/* Returns 1 if the pcm_format is present (format bit set) in
+ * the pcm_params structure; 0 otherwise, or upon unrecognized format.
+ */
+int pcm_params_format_test(struct pcm_params *params, enum pcm_format format);
+
+/* Set and get config */
+int pcm_get_config(struct pcm *pcm, struct pcm_config *config);
+int pcm_set_config(struct pcm *pcm, struct pcm_config *config);
 
 /* Returns a human readable reason for the last error */
 const char *pcm_get_error(struct pcm *pcm);
@@ -167,6 +227,9 @@ unsigned int pcm_format_to_bits(enum pcm_format format);
 unsigned int pcm_get_buffer_size(struct pcm *pcm);
 unsigned int pcm_frames_to_bytes(struct pcm *pcm, unsigned int frames);
 unsigned int pcm_bytes_to_frames(struct pcm *pcm, unsigned int bytes);
+
+/* Returns the pcm latency in ms */
+unsigned int pcm_get_latency(struct pcm *pcm);
 
 /* Returns available frames in pcm buffer and corresponding time stamp.
  * The clock is CLOCK_MONOTONIC if flag PCM_MONOTONIC was specified in pcm_open,
@@ -194,6 +257,7 @@ int pcm_mmap_read(struct pcm *pcm, void *data, unsigned int count);
 int pcm_mmap_begin(struct pcm *pcm, void **areas, unsigned int *offset,
                    unsigned int *frames);
 int pcm_mmap_commit(struct pcm *pcm, unsigned int offset, unsigned int frames);
+int pcm_mmap_avail(struct pcm *pcm);
 
 /* Prepare the PCM substream to be triggerable */
 int pcm_prepare(struct pcm *pcm);
@@ -201,10 +265,26 @@ int pcm_prepare(struct pcm *pcm);
 int pcm_start(struct pcm *pcm);
 int pcm_stop(struct pcm *pcm);
 
+/* ioctl function for PCM driver */
+int pcm_ioctl(struct pcm *pcm, int request, ...);
+
 /* Interrupt driven API */
 int pcm_wait(struct pcm *pcm, int timeout);
+int pcm_get_poll_fd(struct pcm *pcm);
 
-
+/* Change avail_min after the stream has been opened with no need to stop the stream.
+ * Only accepted if opened with PCM_MMAP and PCM_NOIRQ flags
+ */
+int pcm_set_avail_min(struct pcm *pcm, int avail_min);
+int pcm_drain(struct pcm *pcm);
+int pcm_state(struct pcm *pcm);
+int pcm_prepare(struct pcm *pcm);
+int pcm_get_near_param(unsigned int card, unsigned int device,
+                     unsigned int flags, int type, int *data);
+int pcm_get_time_of_status(struct pcm *pcm);
+int pcm_get_time_of_xrun(struct pcm *pcm);
+int pcm_check_param_mask(unsigned int card, unsigned int device,
+                     unsigned int flags, int type, int data);
 /*
  * MIXER API
  */
@@ -218,12 +298,6 @@ void mixer_close(struct mixer *mixer);
 
 /* Get info about a mixer */
 const char *mixer_get_name(struct mixer *mixer);
-
-/* Some controls may not be present at boot time, e.g. controls from loadable
- * DSP firmware. This function adds any new controls that have appeared since
- * mixer_open() or last call to this function
- */
-int mixer_update_ctls(struct mixer *mixer);
 
 /* Obtain mixer controls */
 unsigned int mixer_get_num_ctls(struct mixer *mixer);
@@ -259,6 +333,25 @@ int mixer_ctl_set_enum_by_string(struct mixer_ctl *ctl, const char *string);
 /* Determe range of integer mixer controls */
 int mixer_ctl_get_range_min(struct mixer_ctl *ctl);
 int mixer_ctl_get_range_max(struct mixer_ctl *ctl);
+
+
+/*
+ * CONTROL API
+ */
+struct control;
+
+/*Open and close a control */
+struct control *control_open(unsigned int card);
+void control_close(struct control *control);
+
+/* Get info about control controls */
+const char *control_card_info_get_id(struct control *control);
+const char *control_card_info_get_name(struct control *control);
+const char *control_card_info_get_driver(struct control *control);
+
+int control_pcm_next_device(struct control *control, int *device, int stream);
+const char *control_pcm_info_get_id(struct control *control, unsigned int device, int stream);
+const char *control_pcm_info_get_name(struct control *control, unsigned int device, int stream);
 
 #if defined(__cplusplus)
 }  /* extern "C" */
