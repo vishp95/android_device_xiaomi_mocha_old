@@ -45,6 +45,7 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 TARGET_KERNEL_SOURCE := kernel/xiaomi/mocha
 TARGET_KERNEL_CONFIG := tegra12_android_defconfig
 BOARD_KERNEL_IMAGE_NAME := zImage
+BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 BOARD_CUSTOM_BOOTIMG_MK := device/xiaomi/mocha/mkbootimg.mk
 
