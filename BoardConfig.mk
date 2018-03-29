@@ -25,6 +25,10 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a15
+
+# Binder API
+TARGET_USES_64_BIT_BINDER := true
+
 # Board
 TARGET_BOARD_PLATFORM := tegra
 TARGET_NO_BOOTLOADER := true
