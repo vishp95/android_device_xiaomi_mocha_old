@@ -36,6 +36,9 @@ TARGET_NO_RADIOIMAGE := true
 # Use unified vendor
 TARGET_TEGRA_VARIANT := shield
 
+# FS
+TARGET_EXFAT_DRIVER := sdfat
+
 # Kernel
 BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive androidboot.hardware=tn8
 BOARD_KERNEL_BASE := 0x10000000
