@@ -25,38 +25,92 @@ $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
 
 $(call inherit-product-if-exists, vendor/nvidia/shield/mocha.mk)
 
-# Overlay
-DEVICE_PACKAGE_OVERLAYS += \
-    device/xiaomi/mocha/overlay
+# Audio
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf \
+    $(LOCAL_PATH)/audio/audio.mocha.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.mocha.xml
+    
+PRODUCT_PACKAGES += \
+    audio.a2dp.default \
+    audio.usb.default \
+    audio.r_submix.default \
+    audio.primary.tegra \
+    libaudiohalcm \
+    libaudio-resampler \
+    libaudiospdif \
+    libstagefrighthw \
+    libtinycompress \
+    tinycap_mocha \
+    tinymix_mocha \
+    tinypcminfo_mocha \
+    tinyplay_mocha \
+    libtinyalsa_mocha \
+    libtinyalsa \
+    xaplay \
+    enctune.conf
 
-# HIDL HALs
-$(call inherit-product, device/xiaomi/mocha/hidl.mk)
+# aptXHD
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/aptXHD/libaptX-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptX-1.0.0-rel-Android21-ARMv7A.so \
+    $(LOCAL_PATH)/aptXHD/libaptXHD-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptXHD-1.0.0-rel-Android21-ARMv7A.so \
+    $(LOCAL_PATH)/aptXHD/libaptXScheduler.so:system/vendor/lib/libaptXScheduler.so
 
+# Bluetooth
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
+
+# Camera
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/camera/nvcamera.conf:system/etc/nvcamera.conf \
+    $(LOCAL_PATH)/camera/model_frontal.xml:system/etc/model_frontal.xml
+    
+# Comm Permissions
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
+    
+# Custom tiles
+PRODUCT_PACKAGES += \
+    PerformanceTile
+    
+# Filesystem management tools
+PRODUCT_PACKAGES += \
+    e2fsck fsck.f2fs mkfs.f2fs
+    
 # Graphics shim
 PRODUCT_PACKAGES += libs \
                     libshim_zw
+                    
+# HIDL HALs
+$(call inherit-product, device/xiaomi/mocha/hidl.mk)
 
-# Ramdisk
-PRODUCT_PACKAGES += \
-    fstab.tn8 \
-    init.cal.rc \
-    init.comms.rc \
-    init.hdcp.rc \
-    init.t124.rc \
-    init.tegra.rc \
-    init.tlk.rc \
-    init.tn8.rc \
-    init.tn8.usb.rc \
-    init.tn8_common.rc \
-    init.ussrd.rc \
-    power.tn8.rc \
-    power.mocha.rc \
-    ueventd.tn8.rc \
-    ussrd.conf \
-    ussr_setup
+# keylayout
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/keylayout/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl \
+    $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/keylayout/Vendor_0955_Product_7210.kl:system/usr/keylayout/Vendor_0955_Product_7210.kl
+    
+# Media config
+PRODUCT_COPY_FILES += \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libeffects/data/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
+    $(LOCAL_PATH)/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
+    $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml
+    
+# NVIDIA
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/permissions/com.nvidia.blakemanager.xml:system/etc/permissions/com.nvidia.blakemanager.xml \
+    $(LOCAL_PATH)/permissions/com.nvidia.feature.xml:system/etc/permissions/com.nvidia.feature.xml \
+    $(LOCAL_PATH)/permissions/com.nvidia.feature.opengl4.xml:system/etc/permissions/com.nvidia.feature.opengl4.xml \
+    $(LOCAL_PATH)/permissions/com.nvidia.nvsi.xml:system/etc/permissions/com.nvidia.nvsi.xml
 
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
-TARGET_USERIMAGES_USE_F2FS := true
+# Overlay
+DEVICE_PACKAGE_OVERLAYS += \
+    device/xiaomi/mocha/overlay
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -79,71 +133,50 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
+    frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:system/etc/permissions/android.hardware.sensor.stepcounter.xml \
+    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml
+    
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power@1.0-service.mocha
+    
+# Ramdisk
+PRODUCT_PACKAGES += \
+    fstab.tn8 \
+    init.cal.rc \
+    init.comms.rc \
+    init.hdcp.rc \
+    init.t124.rc \
+    init.tegra.rc \
+    init.tlk.rc \
+    init.tn8.rc \
+    init.tn8.usb.rc \
+    init.tn8_common.rc \
+    init.ussrd.rc \
+    power.tn8.rc \
+    power.mocha.rc \
+    ueventd.tn8.rc \
+    ussrd.conf \
+    ussr_setup
+    
+# Sensors
+PRODUCT_PACKAGES += \
+    sensors.tegra
+    
+# Storage
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=true
 
-# NVIDIA
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/permissions/com.nvidia.blakemanager.xml:system/etc/permissions/com.nvidia.blakemanager.xml \
-    $(LOCAL_PATH)/permissions/com.nvidia.feature.xml:system/etc/permissions/com.nvidia.feature.xml \
-    $(LOCAL_PATH)/permissions/com.nvidia.feature.opengl4.xml:system/etc/permissions/com.nvidia.feature.opengl4.xml \
-    $(LOCAL_PATH)/permissions/com.nvidia.nvsi.xml:system/etc/permissions/com.nvidia.nvsi.xml
+PRODUCT_CHARACTERISTICS := tablet
 
 # Thermal
 PRODUCT_PACKAGES += thermal.tegra
 
-# keylayout
+# Vendor seccomp policy files for media components:
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl \
-    $(LOCAL_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keylayout/Vendor_0955_Product_7210.kl:system/usr/keylayout/Vendor_0955_Product_7210.kl
-
-# Media config
-PRODUCT_COPY_FILES += \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
-    frameworks/av/media/libeffects/data/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
-    $(LOCAL_PATH)/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-    $(LOCAL_PATH)/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
-    $(LOCAL_PATH)/media/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml
-
-# Audio
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf \
-    $(LOCAL_PATH)/audio/audio.mocha.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.mocha.xml
-
-# aptXHD
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/aptXHD/libaptX-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptX-1.0.0-rel-Android21-ARMv7A.so \
-    $(LOCAL_PATH)/aptXHD/libaptXHD-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptXHD-1.0.0-rel-Android21-ARMv7A.so \
-    $(LOCAL_PATH)/aptXHD/libaptXScheduler.so:system/vendor/lib/libaptXScheduler.so
-
-PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    audio.usb.default \
-    audio.r_submix.default \
-    audio.primary.tegra \
-    libaudiohalcm \
-    libaudio-resampler \
-    libaudiospdif \
-    libstagefrighthw \
-    libtinycompress \
-    tinycap_mocha \
-    tinymix_mocha \
-    tinypcminfo_mocha \
-    tinyplay_mocha \
-    libtinyalsa_mocha \
-    libtinyalsa \
-    xaplay \
-    enctune.conf
-
-# Bluetooth
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
-
-# Camera
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/camera/nvcamera.conf:system/etc/nvcamera.conf \
-    $(LOCAL_PATH)/camera/model_frontal.xml:system/etc/model_frontal.xml
+    device/xiaomi/mocha/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    device/xiaomi/mocha/seccomp/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Wifi
 PRODUCT_COPY_FILES += \
@@ -158,54 +191,6 @@ PRODUCT_PACKAGES += \
     wpa_supplicant \
     wpa_supplicant.conf
 
-# Custom tiles
-PRODUCT_PACKAGES += \
-    PerformanceTile
-
 # wifi and bt macs settter
 PRODUCT_PACKAGES += \
     conn_init
-
-# Storage
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.sdcardfs=true
-
-PRODUCT_CHARACTERISTICS := tablet
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    e2fsck fsck.f2fs mkfs.f2fs
-
-# Comm Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
-    frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
-
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-service.mocha
-
-# Sensors
-PRODUCT_PACKAGES += \
-    sensors.tegra
-
-# Packaging
-BLOCK_BASED_OTA := false
-
-# Nvidia enhancements
-NV_ANDROID_FRAMEWORK_ENHANCEMENTS := true
-
-# Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:system/etc/permissions/android.hardware.sensor.stepcounter.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml
-
-# Console Mode
-$(call inherit-product-if-exists, vendor/xiaomi/mocha/consolemode-blobs.mk)
-
-# Vendor seccomp policy files for media components:
-PRODUCT_COPY_FILES += \
-    device/xiaomi/mocha/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
-    device/xiaomi/mocha/seccomp/mediaextractor.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy

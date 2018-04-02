@@ -26,18 +26,34 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a15
 
+# Audio
+BOARD_USES_GENERIC_AUDIO := false
+BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_TINYHAL_AUDIO := true
+
 # Binder API
 TARGET_USES_64_BIT_BINDER := true
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/xiaomi/mocha/bluetooth
 
 # Board
 TARGET_BOARD_PLATFORM := tegra
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
-# Use unified vendor
-TARGET_TEGRA_VARIANT := shield
 
-# Zygote whitelist extra paths
-ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",
+# FS
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
+TARGET_USERIMAGES_USE_F2FS := true
+
+# Graphics
+USE_OPENGL_RENDERER := true
+BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive androidboot.hardware=tn8
@@ -64,26 +80,6 @@ BOARD_PERSISTIMAGE_PARTITION_SIZE := 16777216
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 20971520
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# PowerHAL
-TARGET_POWERHAL_VARIANT := tegra
-
-# ThermalHAL
-TARGET_THERMALHAL_VARIANT := tegra
-
-# Audio
-BOARD_USES_GENERIC_AUDIO := false
-BOARD_USES_ALSA_AUDIO := true
-BOARD_USES_TINYHAL_AUDIO := true
-
-# Bluetooth
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/xiaomi/mocha/bluetooth
-
-# Graphics
-USE_OPENGL_RENDERER := true
-BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
-
 # LINEAGEHW
 BOARD_HARDWARE_CLASS := device/xiaomi/mocha/lineagehw
 
@@ -93,9 +89,6 @@ BACKLIGHT_PATH := "/sys/class/backlight/lcd-backlight/brightness"
 RED_LED_PATH := "/sys/class/leds/red/brightness"
 GREEN_LED_PATH := "/sys/class/leds/green/brightness"
 BLUE_LED_PATH := "/sys/class/leds/blue/brightness"
-
-# Include an expanded selection of fonts
-EXTENDED_FONT_FOOTPRINT := true
 
 # Per-application sizes for shader cache
 MAX_EGL_CACHE_SIZE := 4194304
@@ -109,6 +102,17 @@ BOARD_NO_SECURE_DISCARD := true
 # RenderScript
 OVERRIDE_RS_DRIVER := libnvRSDriver.so
 
+# SELinux
+BOARD_SEPOLICY_DIRS += device/xiaomi/mocha/sepolicy/common \
+                       device/xiaomi/mocha/sepolicy/lineage-common \
+                       device/xiaomi/mocha/sepolicy/mocha
+                       
+# ThermalHAL
+TARGET_THERMALHAL_VARIANT := tegra
+
+# Use unified vendor
+TARGET_TEGRA_VARIANT := shield
+
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
@@ -121,9 +125,6 @@ WIFI_DRIVER_FW_PATH_AP           := "/vendor/firmware/mocha_fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
 #WIFI_DRIVER_MODULE_ARG           := "iface_name=wlan0"
 #WIFI_DRIVER_MODULE_NAME          := "bcmdhd"
-
-
-# SELinux
-BOARD_SEPOLICY_DIRS += device/xiaomi/mocha/sepolicy/common \
-                       device/xiaomi/mocha/sepolicy/lineage-common \
-                       device/xiaomi/mocha/sepolicy/mocha
+                       
+# Zygote whitelist extra paths
+ZYGOTE_WHITELIST_PATH_EXTRA := \"/dev/nvhost-ctrl\",
