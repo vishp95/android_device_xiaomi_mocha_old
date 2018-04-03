@@ -43,7 +43,11 @@ const char *mr_init_devices[] = {
 	"/sys/block/mmcblk1p1",
 	"/sys/devices/platform/sdhci-tegra.2",
 	"/sys/devices/platform/sdhci-tegra.2/mmc_host/mmc1*",
-	
+
+	// OTG
+	"/sys/devices/tegra-ehci.0",
+	"/sys/devices/tegra-ehci.0/usb*",
+
 	// SD Block Devices
 	"/sys/bus/mmc",
 	"/sys/bus/mmc/drivers/mmcblk",
