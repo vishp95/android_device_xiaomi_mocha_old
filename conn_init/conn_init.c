@@ -27,8 +27,8 @@
 #define BT_MAC_PROP "ro.bt.bdaddr_path"
 #define BT_MAC_PROP1 "persist.service.bdroid.bdaddr"
 #define BT_MAC_PROP2 "ro.boot.btmacaddr"
-#define WIFI_MAC_FILE "/system/etc/mocha_macaddr.txt"
-#define BT_MAC_FILE "/system/etc/mocha_btmacaddr.txt"
+#define WIFI_MAC_FILE "/vendor/etc/mocha_macaddr.txt"
+#define BT_MAC_FILE "/vendor/etc/mocha_btmacaddr.txt"
 #define BT_MAC_TAG "XIAOMIBT!"
 #define WIFI_MAC_TAG "XIAOMIWF!"
 
@@ -67,7 +67,7 @@ void set_bt_mac(FILE *fp) {
 	property_set(BT_MAC_PROP, BT_MAC_FILE);
 	property_set(BT_MAC_PROP1, addr);
 	property_set(BT_MAC_PROP2, addr);
-	system("chown bluetooth net_bt_stack /system/etc/mocha_btmacaddr.txt");
+	system("chown bluetooth net_bt_stack /vendor/etc/mocha_btmacaddr.txt");
 	
 exit:
 	return;
@@ -104,7 +104,7 @@ void set_wifi_mac(FILE *fp)
 
 	fprintf(wfp, "%s", addr);
 	fclose(wfp);
-	system("chmod 644 /system/etc/mocha_macaddr.txt");
+	system("chmod 644 /vendor/etc/mocha_macaddr.txt");
 	
 exit:
 	return;
