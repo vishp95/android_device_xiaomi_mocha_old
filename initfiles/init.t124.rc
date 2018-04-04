@@ -51,7 +51,7 @@ on boot
     write /proc/sys/vm/swappiness 80
     write /proc/sys/vm/vfs_cache_pressure 100
 
-on post-fs
+on late-fs
     write /sys/block/mmcblk0/queue/iostats 0
     write /sys/block/mmcblk0/queue/nr_requests 256
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
