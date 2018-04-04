@@ -17,12 +17,20 @@ on early-init
     chmod 0755 /lbh
     chown root system /lbh
 
+on late-fs
+    # Start services for bootanim
+    start servicemanager
+    start surfaceflinger
+    start bootanim
+    # mount RW partitions which need run fsck
+    mount_all /fstab.tn8 --late
+
 on fs
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     setprop ro.crypto.umount_sd false
     setprop ro.crypto.fuse_sdcard true
     setprop audio.custompolicy 1
-    mount_all /fstab.tn8
+    mount_all /fstab.tn8 --early
     swapon_all /fstab.tn8
 
 on boot
