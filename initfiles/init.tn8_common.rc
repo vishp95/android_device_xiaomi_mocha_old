@@ -19,10 +19,16 @@ on early-init
 
 on late-fs
     # Start services for bootanim
-    start hwservicemanager
     start servicemanager
     start surfaceflinger
     start bootanim
+
+    # Make sure HW service manager started and start required HAL services
+    wait_for_prop hwservicemanager.ready true
+    start hwcomposer-2-1
+    start configstore-hal-1-0
+    start gralloc-2-0
+
     # mount RW partitions which need run fsck
     mount_all /fstab.tn8 --late
 
@@ -33,6 +39,8 @@ on fs
     setprop audio.custompolicy 1
     mount_all /fstab.tn8 --early
     swapon_all /fstab.tn8
+
+    start hwservicemanager
 
 on boot
     #max resolution supported for Miracast is 1080p, represented interms of macroblocks
