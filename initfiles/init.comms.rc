@@ -50,6 +50,3 @@ service dns_masq /system/bin/dnsmasq --no-daemon --no-resolv --no-poll --dhcp-op
     group dhcp wifi system
     disabled
     oneshot
-
-# Wifi support rx-filter
-    setprop wifi.rx-filter 1
