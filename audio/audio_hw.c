@@ -1499,7 +1499,7 @@ static int get_next_buffer(struct resampler_buffer_provider *buffer_provider,
         rsp->read_status = pcm_readi(in->pcm,
                                    (void*)rsp->buffer,
                                    pcm_bytes_to_frames(in->pcm, rsp->in_buffer_size));
-        if (rsp->read_status != 0) {
+        if (rsp->read_status < 0) {
             ALOGE("get_next_buffer() pcm_read error %d", errno);
             buffer->raw = NULL;
             buffer->frame_count = 0;
