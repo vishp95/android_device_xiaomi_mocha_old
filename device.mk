@@ -77,7 +77,7 @@ PRODUCT_PACKAGES += \
     
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-    e2fsck fsck.f2fs mkfs.f2fs
+    fsck.f2fs mkfs.f2fs
     
 # Graphics shim
 PRODUCT_PACKAGES += libs \
