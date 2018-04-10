@@ -6,6 +6,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
+# Lineage genuine
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.lineage.nofool=true
+
 # OMX
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.media.treble_omx=false
