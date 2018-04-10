@@ -26,14 +26,5 @@ persist.tegra.didim.video = 5
 persist.tegra.didim.normal = 3
 persist.sys.usb.config=mtp
 persist.sys.isUsbOtgEnabled=1
-persist.bt.enableAptXHD=true
-
-# Widevine drm
-drm.service.enabled=true
-
-# Radio
-ro.radio.noril=yes
 
 media.stagefright.less-secure=true
-
-persist.debug.wfd.enable=1
