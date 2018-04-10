@@ -163,10 +163,9 @@ PRODUCT_PACKAGES += \
 # Sensors
 PRODUCT_PACKAGES += \
     sensors.tegra
-    
-# Storage
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.sdcardfs=true
+
+# System properties
+-include $(LOCAL_PATH)/system_prop.mk
 
 PRODUCT_CHARACTERISTICS := tablet
 
