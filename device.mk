@@ -52,9 +52,8 @@ PRODUCT_PACKAGES += \
 
 # aptXHD
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/aptXHD/libaptX-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptX-1.0.0-rel-Android21-ARMv7A.so \
-    $(LOCAL_PATH)/aptXHD/libaptXHD-1.0.0-rel-Android21-ARMv7A.so:system/vendor/lib/libaptXHD-1.0.0-rel-Android21-ARMv7A.so \
-    $(LOCAL_PATH)/aptXHD/libaptXScheduler.so:system/vendor/lib/libaptXScheduler.so
+    $(LOCAL_PATH)/aptXHD/libaptX_encoder.so:$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libaptX_encoder.so \
+    $(LOCAL_PATH)/aptXHD/libaptXHD_encoder.so:$(TARGET_OUT_VENDOR_SHARED_LIBRARIES)/libaptXHD_encoder.so
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
