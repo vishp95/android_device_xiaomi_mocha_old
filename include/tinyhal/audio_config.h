@@ -24,6 +24,42 @@ struct mixer_ctl;
 struct config_mgr;
 struct audio_config;
 
+/* States for voice trigger / voice recognition state machine */
+enum voice_state {
+    eVoiceNone,             /* no voice recognition hardware */
+    eVoiceTriggerIdle,      /* Trigger-only mode idle */
+    eVoiceTriggerArmed,     /* Trigger-only mode armed */
+    eVoiceTriggerFired,     /* Trigger-only mode received trigger */
+    eVoiceRecogIdle,        /* Full trigger+audio mode idle */
+    eVoiceRecogArmed,       /* Full trigger+audio mode armed */
+    eVoiceRecogFired,       /* Full trigger+audio mode received trigger */
+    eVoiceRecogAudio,       /* Full trigger+audio mode opened for audio */
+    eVoiceRecogReArm        /* Re-arm after audio */
+};
+
+struct audio_device {
+    struct audio_hw_device hw_device;
+
+    pthread_mutex_t lock;
+    bool mic_mute;
+    struct config_mgr *cm;
+
+    struct stream_in_pcm *active_voice_control;
+
+    enum voice_state voice_st;
+    audio_devices_t voice_trig_mic;
+
+    const struct hw_stream* global_stream;
+
+    union {
+        /* config stream for trigger-only operation */
+        const struct hw_stream* voice_trig_stream;
+
+        /* config stream for trigger+voice operation */
+        const struct hw_stream* voice_recog_stream;
+    };
+};
+
 /** Stream type */
 enum stream_type {
     e_stream_out_pcm,

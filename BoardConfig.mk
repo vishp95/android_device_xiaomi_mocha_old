@@ -36,6 +36,9 @@ TARGET_NO_RADIOIMAGE := true
 # Use unified vendor
 TARGET_TEGRA_VARIANT := shield
 
+# FM
+BOARD_HAVE_BCM_FM := true
+
 # FS
 TARGET_EXFAT_DRIVER := sdfat
 

@@ -116,43 +116,6 @@ typedef struct {
 const char kVoiceTriggerStreamName[] = "voice trigger";
 const char kVoiceRecogStreamName[] = "voice recognition";
 
-/* States for voice trigger / voice recognition state machine */
-enum voice_state {
-    eVoiceNone,             /* no voice recognition hardware */
-    eVoiceTriggerIdle,      /* Trigger-only mode idle */
-    eVoiceTriggerArmed,     /* Trigger-only mode armed */
-    eVoiceTriggerFired,     /* Trigger-only mode received trigger */
-    eVoiceRecogIdle,        /* Full trigger+audio mode idle */
-    eVoiceRecogArmed,       /* Full trigger+audio mode armed */
-    eVoiceRecogFired,       /* Full trigger+audio mode received trigger */
-    eVoiceRecogAudio,       /* Full trigger+audio mode opened for audio */
-    eVoiceRecogReArm        /* Re-arm after audio */
-};
-
-struct audio_device {
-    struct audio_hw_device hw_device;
-
-    pthread_mutex_t lock;
-    bool mic_mute;
-    struct config_mgr *cm;
-
-    struct stream_in_pcm *active_voice_control;
-
-    enum voice_state voice_st;
-    audio_devices_t voice_trig_mic;
-
-    const struct hw_stream* global_stream;
-
-    union {
-        /* config stream for trigger-only operation */
-        const struct hw_stream* voice_trig_stream;
-
-        /* config stream for trigger+voice operation */
-        const struct hw_stream* voice_recog_stream;
-    };
-};
-
-
 typedef void(*out_close_fn)(struct audio_stream_out *);
 
 /* Fields common to all types of output stream */
@@ -2066,13 +2029,15 @@ static int change_input_source_locked(struct stream_in_pcm *in, const char *valu
 
     *was_changed = false;
 
+    ALOGE("change_input_source_locked value =  %s", value);
+
     if (!in->common.standby) {
         ALOGE("attempt to change input source while active");
         return -EINVAL;
     }
 
     if (in->common.input_source == new_source) {
-        ALOGV("input source not changed");
+        ALOGE("input source not changed");
         return 0;
     }
 
@@ -2091,16 +2056,20 @@ static int change_input_source_locked(struct stream_in_pcm *in, const char *valu
         stream_name = voice_trigger_audio_stream_name(adev);
         voice_control = true;
         break;
-
+    case 1998:
+        stream_name = "rt5671 FM";
+        break;
     default:
         stream_name = NULL;
         break;
     }
+    
+    ALOGE("change_input_source_locked stream_name = %s", stream_name);
 
     if (stream_name) {
         /* try to open a stream specific to the chosen input source */
         hw = get_named_stream(in->common.dev->cm, stream_name);
-        ALOGV_IF(hw != NULL, "Changing input source to %s", stream_name);
+        ALOGE_IF(hw != NULL, "Changing input source to %s", stream_name);
     }
 
     if (!hw) {
@@ -2112,9 +2081,11 @@ static int change_input_source_locked(struct stream_in_pcm *in, const char *valu
         hw = get_stream(in->common.dev->cm, devices, 0, &config);
         ALOGV_IF(hw != NULL, "Changing to default input source for devices 0x%x",
                         devices);
+        ALOGE("change_input_source_locked hw == NULL");
     }
 
     if (hw != NULL) {
+        ALOGE("change_input_source_locked hw != NULL");
         /* A normal stream will be in standby and therefore device node */
         /* is closed when we get here. */
 
@@ -2251,7 +2222,7 @@ static int in_pcm_set_parameters(struct audio_stream *stream, const char *kvpair
     bool input_was_changed;
     int ret;
 
-    ALOGV("+in_pcm_set_parameters(%p) '%s'", stream, kvpairs);
+    ALOGE("+in_pcm_set_parameters(%p) '%s'", stream, kvpairs);
 
     ret = common_get_routing_param(&new_routing, kvpairs);
     routing_changed = (ret >= 0);

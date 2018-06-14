@@ -792,7 +792,7 @@ const struct hw_stream *get_named_stream(struct config_mgr *cm,
         ALOGV("-get_named_stream =%p (refcount=%d)", &s->info, s->ref_count );
         return &s->info;
     } else {
-        ALOGE("-get_named_stream no suitable stream" );
+        ALOGE("-get_named_stream no suitable stream for %s", name);
         return NULL;
     }
 }
@@ -1078,7 +1078,8 @@ static const struct parse_device device_table[] = {
     {"mic",         AUDIO_DEVICE_IN_BUILTIN_MIC},
     {"back mic",    AUDIO_DEVICE_IN_BACK_MIC},
     {"voice",       AUDIO_DEVICE_IN_VOICE_CALL},
-    {"aux",         AUDIO_DEVICE_IN_AUX_DIGITAL}
+    {"aux",         AUDIO_DEVICE_IN_AUX_DIGITAL},
+    {"fm-rx",       AUDIO_DEVICE_IN_FM_TUNER}
 };
 
 static const char *predefined_path_name_table[] = {
