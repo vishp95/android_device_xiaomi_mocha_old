@@ -4,7 +4,8 @@
 
 #define LOG_TAG "mocha_init"
 
-#include <cutils/log.h>
+#include <android-base/properties.h>
+#include <android-base/logging.h>
 #include <sys/sysinfo.h>
 
 #include "property_service.h"
@@ -21,13 +22,13 @@ void get_dalvik_heap_props()
     sysinfo(&sys);
 
     if (sys.totalram > 2048ull * 1024 * 1024) {
-        ALOGV("3Gb RAM device");
+        LOG(VERBOSE) << "3Gb RAM device";
         heapstartsize = "8m";
         heapgrowthlimit = "288m";
         heapsize = "768m";
         heapminfree = "512k";
     } else {
-        ALOGV("2Gb RAM device");
+        LOG(VERBOSE) << "2Gb RAM device";
         heapstartsize = "16m";
         heapgrowthlimit = "192m";
         heapsize = "512m";
@@ -39,10 +40,10 @@ void vendor_load_properties()
 {
     get_dalvik_heap_props();
 
-    property_set("dalvik.vm.heapstartsize", heapstartsize);
-    property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
-    property_set("dalvik.vm.heapsize", heapsize);
-    property_set("dalvik.vm.heaptargetutilization", "0.75");
-    property_set("dalvik.vm.heapminfree", heapminfree);
-    property_set("dalvik.vm.heapmaxfree", "8m");
+    android::init::property_set("dalvik.vm.heapstartsize", heapstartsize);
+    android::init::property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
+    android::init::property_set("dalvik.vm.heapsize", heapsize);
+    android::init::property_set("dalvik.vm.heaptargetutilization", "0.75");
+    android::init::property_set("dalvik.vm.heapminfree", heapminfree);
+    android::init::property_set("dalvik.vm.heapmaxfree", "8m");
 }
