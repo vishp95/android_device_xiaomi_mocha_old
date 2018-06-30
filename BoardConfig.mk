@@ -64,6 +64,10 @@ BOARD_DISABLE_TRIPLE_BUFFERED_DISPLAY_SURFACES := true
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
+# Init
+TARGET_INIT_VENDOR_LIB := mocha_init
+TARGET_RECOVERY_DEVICE_MODULES := mocha_init
+
 # Kernel
 BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x10000000
