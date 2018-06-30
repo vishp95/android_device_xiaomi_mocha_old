@@ -39,6 +39,10 @@ TARGET_TEGRA_VARIANT := shield
 # FS
 TARGET_EXFAT_DRIVER := sdfat
 
+# Init
+TARGET_INIT_VENDOR_LIB := mocha_init
+TARGET_RECOVERY_DEVICE_MODULES := mocha_init
+
 # Kernel
 BOARD_KERNEL_CMDLINE := vpr_resize androidboot.selinux=permissive androidboot.hardware=tn8
 BOARD_KERNEL_BASE := 0x10000000
