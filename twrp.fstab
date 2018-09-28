@@ -7,7 +7,6 @@
 /misc                 emmc      /dev/block/platform/sdhci-tegra.3/by-name/misc
 /staging              emmc      /dev/block/platform/sdhci-tegra.3/by-name/staging
 /metadata             emmc      /dev/block/platform/sdhci-tegra.3/by-name/MDA                     
-/persist              ext4      /dev/block/platform/sdhci-tegra.3/by-name/persist
 /data                 ext4      /dev/block/platform/sdhci-tegra.3/by-name/userdata
 /external_sd          vfat      /dev/block/platform/sdhci-tegra.2/by-num/p1           flags=display="MICRO SD";storage;wipeingui;removable
 /usb-otg              vfat      /dev/block/sda1 /dev/block/sda                        flags=display="USB OTG";storage;wipeingui;removable
