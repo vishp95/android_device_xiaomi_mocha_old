@@ -47,6 +47,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 PRODUCT_COPY_FILES += device/xiaomi/mocha/twrp.fstab:recovery/root/etc/twrp.fstab
 
+TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone1/temp
+
 # MultiROM
 MR_PIXEL_FORMAT := RGB_565
 MR_INPUT_TYPE := type_b
