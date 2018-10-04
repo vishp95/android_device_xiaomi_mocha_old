@@ -83,6 +83,7 @@ on boot
 
 # dt2w
     chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-004a/wakeup_mode
+    chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-0020/input/input0/wake_gesture
     chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-0020/input/input3/wake_gesture
 
 # LiveDisplay
@@ -94,6 +95,7 @@ on boot
 
 # key disabler
     chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-004a/enable_keys
+    chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-0020/input/input0/0dbutton
     chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-0020/input/input3/0dbutton
 
 # vibrator intensity
