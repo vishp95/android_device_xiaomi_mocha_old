@@ -151,6 +151,7 @@ PRODUCT_PACKAGES += \
 
 # Custom tiles
 PRODUCT_PACKAGES += \
+    ChargerTile \
     PerformanceTile
 
 # wifi and bt macs settter
