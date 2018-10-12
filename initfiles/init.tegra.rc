@@ -74,6 +74,9 @@ on boot
 
 # backlight
     chown system system /sys/class/backlight/lcd-backlight/brightness
+    
+# charger
+    chown system system /sys/devices/platform/7000c400.i2c/i2c-1/1-006b/disabled_by_user
 
 # didim
     chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/enable
