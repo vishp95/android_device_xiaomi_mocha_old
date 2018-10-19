@@ -53,10 +53,10 @@ public class ChargerTile extends TileService {
     private void updateTile() {
 	if (mChargingDisabledByUser == 1) {
 	    getQsTile().setLabel(getString(R.string.charger_tile_state, getString(R.string.charger_state_disabled)));
-	    getQsTile().setState(Tile.STATE_ACTIVE);
+	    getQsTile().setState(Tile.STATE_INACTIVE);
 	} else {
 	    getQsTile().setLabel(getString(R.string.charger_tile_state, getString(R.string.charger_state_enabled)));
-	    getQsTile().setState(Tile.STATE_INACTIVE);
+	    getQsTile().setState(Tile.STATE_ACTIVE);
 	}
 	getQsTile().updateTile();
     }
