@@ -22,7 +22,7 @@ import com.android.arttttt.chargertile.utils.PreferencesUtils;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
-import org.lineageos.internal.util.FileUtils;
+import org.cyanogenmod.internal.util.FileUtils;
 
 public class ChargerTile extends TileService {
 

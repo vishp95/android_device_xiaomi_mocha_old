@@ -23,7 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.lineageos.internal.util.FileUtils;
+import org.cyanogenmod.internal.util.FileUtils;
 
 public class ChargerTileBootReceiver extends BroadcastReceiver {
 
