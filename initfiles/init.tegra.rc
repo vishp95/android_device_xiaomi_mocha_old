@@ -14,10 +14,11 @@ on early-init
 on init
     export LD_PRELOAD "libshim_zw.so"
 
-    mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
     mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-    mkdir /storage/sdcard1 0700 root root
+    
+    # Support legacy paths
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
 
     # create directory for mounting usb drives
     mkdir /mnt/media_rw/usbdrive 0700 media_rw media_rw
@@ -27,6 +28,9 @@ on init
 
     # create directory for mounting calibration partition
     mkdir /mnt/factory 0666 system system
+    
+    mkdir /factory 0666 system system
+    mkdir /factory/wifi_config 0666 system system
 
     # create directory for mounting user calibration partition
     mkdir /mnt/usercalib 0771 system system
@@ -39,33 +43,25 @@ on fs
 
 on post-fs-data
     # We chown/chmod /mnt/usercalib again so because mount is run as root + defaults
-    chown system system /mnt/usercalib
-    chmod 0771 /mnt/usercalib
+    chown system system /usercalib
+    chmod 0771 /usercalib
 
     # create the lost+found directories, so as to enforce our permissions
-    mkdir /mnt/usercalib/lost+found 0770 root root
+    mkdir /usercalib/lost+found 0770 root root
 
     # Set SELinux security contexts on upgrade or policy update.
-    restorecon_recursive /mnt/usercalib
+    restorecon_recursive /usercalib
 
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/misc/hwc 0771 system graphics
     mkdir /data/nvcam 0700 media camera
-
-    mkdir /data/misc/wminput 0776 system system
-
-    mkdir /data/media 0770 media_rw media_rw
+    chown dhcp dhcp /data/misc/dhcp
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
-    # create directory for runtime calibration data
-    # remount to rw and set perm to 770 till new diag product is created
-    mkdir /data/touchscreen 0770 system system
-    
-    # create directory for camera calibration data
-    mkdir /mnt/factory/camera 0666 system system
-
-    # cpu volt cap
-    mkdir /data/misc/cvc 0774 system system
+    # create directory for mediaserver EGL blob cache
+    mkdir /data/misc/mediaserver 0770 media media
 
 # Set up HDCP
 import init.hdcp.rc
@@ -77,12 +73,6 @@ on boot
     
 # charger
     chown system system /sys/devices/platform/7000c400.i2c/i2c-1/1-006b/disabled_by_user
-
-# didim
-    chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/enable
-    chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/aggressiveness
-    chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/sd_window
-    chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/sd_window_enable
 
 #dt2w
     chown system system /sys/devices/platform/7000c700.i2c/i2c-3/3-004a/wakeup_mode
@@ -100,7 +90,6 @@ on boot
 
 # CMU
     chown system system /sys/devices/platform/host1x/tegradc.0/cmu_enable
-    chown system system /sys/devices/platform/host1x/tegradc.1/cmu_enable
 
 # power
     chown system system /sys/kernel/tegra_cap/core_cap_level
@@ -169,9 +158,6 @@ on boot
     chown system system /sys/bus/i2c/drivers/lp5521/0-0032/select_engine
     chown system system /sys/bus/i2c/drivers/lp5521/0-0032/run_engine
 
-# Set GL driver yield function to sleep for 250us
-    setprop persist.tegra.yieldFunctionSlow 4
-
 # TLK storage service
 import init.tlk.rc
 
@@ -233,7 +219,7 @@ service bugreport /system/bin/dumpstate -d -p -B -o /data/data/com.android.shell
 # unified scaling setup
 import init.ussrd.rc
 
-# Thie yields each tegra wdt expiration to be at 7.5 secs and fourth expiration for reboot at 30 secs.
-service watchdogd /sbin/watchdogd 10 20
+# Thie yields each tegra wdt expiration to be at 30 secs and fourth expiration for reboot at 120 secs.
+service watchdogd /sbin/watchdogd 10 110
     class core
     seclabel u:r:watchdogd:s0
