@@ -13,10 +13,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl
 
-# GNSS
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl
-
 # Graphics
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
@@ -43,7 +39,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-impl
+    android.hardware.power@1.0-service.mocha
 
 # Renderscript
 PRODUCT_PACKAGES += \
