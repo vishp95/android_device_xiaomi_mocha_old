@@ -21,6 +21,10 @@ const char *mr_init_devices[] = {
 	"/sys/class/input/input3/event3",
 	"/sys/class/input/input2",
 	"/sys/class/input/input2/event2",
+	"/sys/class/input/input1",
+	"/sys/class/input/input1/event1",
+	"/sys/class/input/input0",
+	"/sys/class/input/input0/event0",
 	
 	// Buttons
 	"/sys/devices/platform/gpio-keys.4",
