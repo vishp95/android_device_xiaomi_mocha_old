@@ -25,3 +25,14 @@ LOCAL_SRC_FILES := mocha_init.cpp
 LOCAL_MODULE := mocha_init
 
 include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := mocha_audio.c
+LOCAL_SHARED_LIBRARIES := libicuuc libicui18n libcutils
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE := libmocha_audio
+LOCAL_C_INCLUDES := \
+    external/icu/icu4c/source/common
+
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SHARED_LIBRARY)

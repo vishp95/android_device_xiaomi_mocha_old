@@ -48,7 +48,7 @@
 
 <AudioConfigs>
   <alsa_device name="music"
-               card_id="-1"
+               card_id="1"
                card_name="tegrart5671"
                device_id="0">
     <pcm_config rate="48000"
@@ -89,6 +89,7 @@
       <ctl name="Left Spk Inductance" val="39uH"/>
       <ctl name="Right Spk Inductance" val="39uH"/>
 
+<!--
       <ctl name="Left Spk Boot Patch" val="tfa9890_boot.patch"/>
       <ctl name="Right Spk Boot Patch" val="tfa9890_boot.patch"/>
       <ctl name="Left Spk ROM Patch" val="tfa9890_rom.patch"/>
@@ -97,6 +98,7 @@
       <ctl name="Right Spk Speaker File" val="tfa9890_right.speaker"/>
       <ctl name="Left Spk Config File" val="tfa9890.config"/>
       <ctl name="Right Spk Config File" val="tfa9890.config"/>
+-->
     </path>
 
     <playback>
@@ -169,6 +171,7 @@
           <ctl name="Left Spk Gain Channel Mux" val="Right"/>
           <ctl name="Right Spk Gain Channel Mux" val="Left"/>
 
+<!--
           <ctl name="Left Spk Preset File" val="tfa9890_left_music.preset" mode="AUDIO_MODE_NORMAL"/>
           <ctl name="Left Spk Preset File" val="tfa9890_left_voice.preset" mode="AUDIO_MODE_IN_COMMUNICATION"/>
           <ctl name="Right Spk Preset File" val="tfa9890_right_music.preset" mode="AUDIO_MODE_NORMAL"/>
@@ -177,6 +180,7 @@
           <ctl name="Left Spk Equalizer File" val="tfa9890_left_voice.eq" mode="AUDIO_MODE_IN_COMMUNICATION"/>
           <ctl name="Right Spk Equalizer File" val="tfa9890_right_music.eq" mode="AUDIO_MODE_NORMAL"/>
           <ctl name="Right Spk Equalizer File" val="tfa9890_right_voice.eq" mode="AUDIO_MODE_IN_COMMUNICATION"/>
+-->
 
           <ctl name="Int Left Spk Switch" val="1"/>
           <ctl name="Int Left Spk Switch" val="0" tag="speakerright-raw"/>
@@ -404,7 +408,7 @@
   </alsa_device>
 
   <alsa_device name ="aux"
-             card_id="-1"
+             card_id="0"
              card_name="Tegra"
              device_id="3">
     <pcm_config rate="48000"

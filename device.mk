@@ -73,6 +73,17 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml
 
+# AUDIO TEST
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/libaudioavp.so:system/vendor/lib/libaudioavp.so \
+    $(LOCAL_PATH)/libbt-client-api.so:system/vendor/lib/libbt-client-api.so \
+    $(LOCAL_PATH)/libnvaudioservice.so:system/vendor/lib/libnvaudioservice.so \
+    $(LOCAL_PATH)/libnvcapaudioservice.so:system/vendor/lib/libnvcapaudioservice.so \
+    $(LOCAL_PATH)/libnvcapclk.so:system/vendor/lib/libnvcapclk.so \
+    $(LOCAL_PATH)/libnvoice.so:system/vendor/lib/libnvoice.so \
+    $(LOCAL_PATH)/audio.primary.tegra.so:system/vendor/lib/hw/audio.primary.tegra.so \
+    $(LOCAL_PATH)/libtinyalsa.so:system/vendor/lib/libtinyalsa.so 
+
 # NVIDIA
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/com.nvidia.blakemanager.xml:system/etc/permissions/com.nvidia.blakemanager.xml \
@@ -100,7 +111,8 @@ PRODUCT_COPY_FILES += \
 # Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/audio/audio.mocha.xml:system/etc/audio.mocha.xml
+    $(LOCAL_PATH)/audio/nvaudio_conf.xml:system/etc/nvaudio_conf.xml 
+#    $(LOCAL_PATH)/audio/audio.mocha.xml:system/etc/audio.mocha.xml
 
 # aptXHD
 PRODUCT_COPY_FILES += \
@@ -112,20 +124,25 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
-    audio.primary.tegra \
-    libaudiohalcm \
     libaudio-resampler \
     libaudiospdif \
     libstagefrighthw \
-    libtinycompress \
-    tinycap_mocha \
-    tinymix_mocha \
-    tinypcminfo_mocha \
-    tinyplay_mocha \
-    libtinyalsa_mocha \
-    libtinyalsa \
+    tinycap \
+    tinymix \
+    tinyplay \
+    libstlport \
+    libmocha_audio \
     xaplay \
-    enctune.conf
+    enctune.conf #\
+#    audio.primary.tegra \
+#    libaudiohalcm \
+#    libtinycompress \
+#    tinycap_mocha \
+#    tinymix_mocha \
+#    tinypcminfo_mocha \
+#    tinyplay_mocha \
+#    libtinyalsa_mocha \
+#    libtinyalsa
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
