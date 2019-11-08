@@ -122,7 +122,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    audio.usb.default \
     audio.r_submix.default \
     libaudio-resampler \
     libaudiospdif \
@@ -134,6 +133,7 @@ PRODUCT_PACKAGES += \
     libmocha_audio \
     xaplay \
     enctune.conf #\
+#    audio.usb.default \
 #    audio.primary.tegra \
 #    libaudiohalcm \
 #    libtinycompress \
