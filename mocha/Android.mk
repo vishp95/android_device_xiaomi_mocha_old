@@ -36,3 +36,20 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
+
+# Audio HAL
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := audio.primary.$(TARGET_BOARD_PLATFORM)
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE_TAGS := optional
+LOCAL_SRC_FILES := wrapper.c
+
+LOCAL_C_INCLUDES += \
+    external/tinyalsa/include \
+    system/media/audio_utils/include \
+    system/media/audio_effects/include
+LOCAL_SHARED_LIBRARIES := liblog libcutils libaudioutils libdl libtinyalsa
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_SHARED_LIBRARY)

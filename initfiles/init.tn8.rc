@@ -42,7 +42,7 @@ on init
     setprop sys.esrd.check_screen_off 1
     chown system system /sys/power/sysedp/batmon/esr
     chown system system /sys/bus/i2c/devices/1-0040/iio_device/running_mode
-    export LD_SHIM_LIBS "/system/vendor/lib/hw/audio.primary.tegra.so|libmocha_audio.so"
+    export LD_SHIM_LIBS "/system/vendor/lib/hw/audio.primary.vendor.tegra.so|libmocha_audio.so"
 
 on boot
     #change vm memory parameter
