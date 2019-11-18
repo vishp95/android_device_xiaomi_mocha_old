@@ -81,7 +81,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/libnvcapaudioservice.so:system/vendor/lib/libnvcapaudioservice.so \
     $(LOCAL_PATH)/libnvcapclk.so:system/vendor/lib/libnvcapclk.so \
     $(LOCAL_PATH)/libnvoice.so:system/vendor/lib/libnvoice.so \
-    $(LOCAL_PATH)/audio.primary.tegra.vendor.so:system/vendor/lib/hw/audio.primary.tegra.vendor.so \
+    $(LOCAL_PATH)/audio.primary.vendor.tegra.so:system/vendor/lib/hw/audio.primary.vendor.tegra.so \
     $(LOCAL_PATH)/alsaold.so:system/vendor/lib/alsaold.so 
 
 # NVIDIA
