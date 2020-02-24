@@ -24,8 +24,8 @@ $(call inherit-product-if-exists, vendor/nvidia/shield/mocha.mk)
 # Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/media/nvaudio_conf.xml:system/etc/nvaudio_conf.xml  \
-    $(LOCAL_PATH)/media/nvaudio_fx.xml:system/etc/nvaudio_fx.xml  \
+    $(LOCAL_PATH)/media/nvaudio_conf.xml:$(TARGET_COPY_OUT_VENDOR)/etc/nvaudio_conf.xml  \
+    $(LOCAL_PATH)/media/nvaudio_fx.xml:$(TARGET_COPY_OUT_VENDOR)/etc/nvaudio_fx.xml  \
     $(LOCAL_PATH)/media/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf
     
 PRODUCT_PACKAGES += \
