@@ -24,21 +24,25 @@ $(call inherit-product-if-exists, vendor/nvidia/shield/mocha.mk)
 # Audio
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
-    $(LOCAL_PATH)/audio/nvaudio_conf.xml:$(TARGET_COPY_OUT_VENDOR)/etc/nvaudio_conf.xml  \
+    $(LOCAL_PATH)/media/audio.mocha.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio.mocha.xml \
     $(LOCAL_PATH)/media/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy.conf
     
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
+    audio.primary.tegra \
+    libaudiohalcm \
     libaudio-resampler \
     libaudiospdif \
     libstagefrighthw \
     libtinycompress \
+    tinycap_mocha \
+    tinymix_mocha \
+    tinypcminfo_mocha \
+    tinyplay_mocha \
+    libtinyalsa_mocha \
     libtinyalsa \
-    tinycap \
-    tinymix \
-    tinyplay \
     xaplay \
     enctune.conf
 
